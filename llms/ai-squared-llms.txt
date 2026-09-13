@@ -1,0 +1,209 @@
+# AI Squared
+
+- [Welcome](https://docs.squared.ai/home/welcome.md)
+- [Data & AI Integration](https://docs.squared.ai/faqs/data-and-ai-integration.md)
+- [Model Configuration](https://docs.squared.ai/faqs/model-config.md)
+- [Data Apps](https://docs.squared.ai/faqs/data-apps.md)
+- [Deployment & Security](https://docs.squared.ai/faqs/deployment-and-security.md)
+- [Feedback](https://docs.squared.ai/faqs/feedback.md)
+- [Billing & Account](https://docs.squared.ai/faqs/billing-and-account.md)
+- [Architecture Overview](https://docs.squared.ai/open-source/guides/architecture/introduction.md)
+- [Multiwoven Protocol](https://docs.squared.ai/open-source/guides/architecture/multiwoven-protocol.md)
+- [Technical Stack](https://docs.squared.ai/open-source/guides/architecture/technical-stack.md)
+- [Sync States](https://docs.squared.ai/open-source/guides/architecture/sync-states.md)
+- [Overview](https://docs.squared.ai/open-source/community-support/overview.md)
+- [Release Process](https://docs.squared.ai/open-source/community-support/release-process.md)
+- [Commit Message Guidelines](https://docs.squared.ai/open-source/community-support/commit-message-guidelines.md)
+- [Contributor Code of Conduct](https://docs.squared.ai/open-source/community-support/contribution.md): Contributor Covenant Code of Conduct
+- [Slack Code of Conduct](https://docs.squared.ai/open-source/community-support/slack-conduct.md)
+- [Introduction to AI Squared](https://docs.squared.ai/getting-started/introduction.md): Learn what AI Squared is, who it’s for, and how it helps businesses integrate AI seamlessly into their workflows.
+- [Setting Up Your Account](https://docs.squared.ai/getting-started/setup.md): Learn how to create an account, manage workspaces, and define user roles and permissions in AI Squared.
+- [Navigating AI Squared](https://docs.squared.ai/getting-started/navigation.md): Explore the AI Squared dashboard, including reports, sources, destinations, models, syncs, and data apps.
+- [Workspace Management](https://docs.squared.ai/getting-started/workspace-management/overview.md): Learn how to create a new workspace, manage settings and workspace users.
+- [Introduction](https://docs.squared.ai/activation/ai-modelling/introduction.md)
+- [Adding an AI/ML Source](https://docs.squared.ai/activation/add-ai-source.md): How to connect and configure a hosted AI/ML model source in AI Squared.
+- [Anthropic Model](https://docs.squared.ai/activation/ai-ml-sources/anthropic-model.md)
+- [Open AI Model](https://docs.squared.ai/activation/ai-ml-sources/open_ai-model.md)
+- [Google Vertex Model](https://docs.squared.ai/activation/ai-ml-sources/google_vertex-model.md)
+- [WatsonX.AI Model](https://docs.squared.ai/activation/ai-ml-sources/watsonx_ai-model.md)
+- [HTTP Model Source Connector](https://docs.squared.ai/activation/ai-ml-sources/http-model-endpoint.md): Guide on how to configure the HTTP Model Connector on the AI Squared platform
+- [AWS Bedrock Model](https://docs.squared.ai/activation/ai-ml-sources/aws_bedrock-model.md)
+- [OpenAI Compatible Endpoint](https://docs.squared.ai/activation/ai-ml-sources/generic_open_ai-endpoint.md): Connect AI Squared to any OpenAI-compatible API endpoint.
+- [Pinecone](https://docs.squared.ai/activation/vector-search/pinecone_db.md)
+- [Qdrant](https://docs.squared.ai/activation/vector-search/qdrant.md)
+- [Overview](https://docs.squared.ai/activation/ai-modelling/modelling-overview.md): Understand what AI Modeling means inside AI Squared and how to configure your models for activation.
+- [Connect Source](https://docs.squared.ai/activation/ai-modelling/connect-source.md): Learn how to connect and configure an AI/ML model as a source for use within the AI Squared platform.
+- [Input Schema](https://docs.squared.ai/activation/ai-modelling/input-schema.md): Define and configure the input schema to structure the data your model receives.
+- [Preprocessing](https://docs.squared.ai/activation/ai-modelling/preprocessing.md): Configure transformations on input data before sending it to your AI/ML model.
+- [Output Schema](https://docs.squared.ai/activation/ai-modelling/output-schema.md): Define how to handle and structure your AI/ML model's responses.
+- [Overview](https://docs.squared.ai/activation/data-apps/overview.md): Understand what Data Apps are and how they help bring AI into business workflows.
+- [Create a Data App](https://docs.squared.ai/activation/data-apps/visualizations/create-data-app.md): Step-by-step guide to building and configuring a Data App in AI Squared.
+- [Embed in Business Apps](https://docs.squared.ai/activation/data-apps/visualizations/embed.md): Learn how to embed Data Apps into tools like CRMs, support platforms, or internal web apps.
+- [Feedback](https://docs.squared.ai/activation/data-apps/visualizations/feedback.md): Learn how to collect user feedback on AI insights delivered via Data Apps.
+- [Data Apps Reports](https://docs.squared.ai/activation/data-apps/visualizations/reports.md): Understand how to monitor and analyze user engagement and model effectiveness with Data Apps.
+- [Chatbot](https://docs.squared.ai/activation/data-apps/chatbot/overview.md): Coming soon..
+- [Platform Extension](https://docs.squared.ai/activation/data-apps/browser-extension/platform.md)
+- [Headless Extension](https://docs.squared.ai/activation/data-apps/browser-extension/headless-ext.md)
+- [Overview](https://docs.squared.ai/workflows/overview.md)
+- [Knowledge Bases](https://docs.squared.ai/workflows/knowledge-bases.md)
+- [Agents & MCP Tools](https://docs.squared.ai/workflows/mcp-tools.md)
+- [Chat Assistants](https://docs.squared.ai/workflows/chat-assistants.md): Deploy AI workflows as interactive chat assistants with support for file uploads and embedded deployment.
+- [Workflow Analytics](https://docs.squared.ai/workflows/workflow-analytics.md)
+- [Introduction](https://docs.squared.ai/guides/core-concepts.md)
+- [Adding a Data Source](https://docs.squared.ai/guides/add-data-source.md): How to connect and configure a business data source in AI Squared.
+- [Amazon Redshift](https://docs.squared.ai/guides/sources/data-sources/redshift.md)
+- [Snowflake](https://docs.squared.ai/guides/sources/data-sources/snowflake.md)
+- [Google Big Query](https://docs.squared.ai/guides/sources/data-sources/bquery.md)
+- [Databricks](https://docs.squared.ai/guides/sources/data-sources/databricks.md)
+- [PostgreSQL](https://docs.squared.ai/guides/sources/data-sources/postgresql.md): PostgreSQL popularly known as Postgres, is a powerful, open-source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale data workloads.
+- [Salesforce Consumer Goods Cloud](https://docs.squared.ai/guides/sources/data-sources/salesforce-consumer-goods-cloud.md)
+- [AWS Athena](https://docs.squared.ai/guides/sources/data-sources/aws_athena.md)
+- [ClickHouse](https://docs.squared.ai/guides/sources/data-sources/clickhouse.md)
+- [MariaDB](https://docs.squared.ai/guides/sources/data-sources/maria_db.md)
+- [Oracle](https://docs.squared.ai/guides/sources/data-sources/oracle.md)
+- [S3](https://docs.squared.ai/guides/sources/data-sources/amazon_s3.md)
+- [Databricks Model](https://docs.squared.ai/guides/sources/data-sources/databricks-model.md)
+- [AWS Sagemaker Model](https://docs.squared.ai/guides/sources/data-sources/aws_sagemaker-model.md)
+- [SFTP](https://docs.squared.ai/guides/sources/data-sources/sftp.md)
+- [WatsonX.Data](https://docs.squared.ai/guides/sources/data-sources/watsonx_data.md)
+- [Intuit QuickBooks](https://docs.squared.ai/guides/sources/data-sources/intuit_quickbooks.md)
+- [Firecrawl](https://docs.squared.ai/guides/sources/data-sources/firecrawl.md)
+- [Odoo](https://docs.squared.ai/guides/sources/data-sources/odoo.md)
+- [Google Drive](https://docs.squared.ai/guides/sources/data-sources/google-drive.md)
+- [Salesforce](https://docs.squared.ai/guides/destinations/retl-destinations/crm/salesforce.md)
+- [HubSpot](https://docs.squared.ai/guides/destinations/retl-destinations/crm/hubspot.md): HubSpot is a customer platform with all the software, integrations, and resources you need to connect your marketing, sales, content management, and customer service. HubSpot's connected platform enables you to grow your business faster by focusing on what matters most: your customers.
+- [Zoho](https://docs.squared.ai/guides/destinations/retl-destinations/crm/zoho.md)
+- [Microsoft Dynamics](https://docs.squared.ai/guides/destinations/retl-destinations/crm/microsoft_dynamics.md)
+- [Braze](https://docs.squared.ai/guides/destinations/retl-destinations/marketing-automation/braze.md)
+- [CleverTap](https://docs.squared.ai/guides/destinations/retl-destinations/marketing-automation/clevertap.md)
+- [Klaviyo](https://docs.squared.ai/guides/destinations/retl-destinations/marketing-automation/klaviyo.md)
+- [Iterable](https://docs.squared.ai/guides/destinations/retl-destinations/marketing-automation/iterable.md)
+- [Mailchimp](https://docs.squared.ai/guides/destinations/retl-destinations/marketing-automation/mailchimp.md)
+- [Facebook Custom Audiences](https://docs.squared.ai/guides/destinations/retl-destinations/adtech/facebook-ads.md)
+- [Google Ads](https://docs.squared.ai/guides/destinations/retl-destinations/adtech/google-ads.md)
+- [Google Analytics](https://docs.squared.ai/guides/destinations/retl-destinations/analytics/google-analytics.md)
+- [Mixpanel](https://docs.squared.ai/guides/destinations/retl-destinations/analytics/mixpanel.md)
+- [Amplitude](https://docs.squared.ai/guides/destinations/retl-destinations/analytics/amplitude.md)
+- [Databricks](https://docs.squared.ai/guides/destinations/retl-destinations/analytics/databricks_lakehouse.md)
+- [Zendesk](https://docs.squared.ai/guides/destinations/retl-destinations/customer-support/zendesk.md): Zendesk is a customer service software and support ticketing system. Zendesk's connected platform enables you to improve customer relationships by providing seamless support and comprehensive customer insights.
+- [Intercom](https://docs.squared.ai/guides/destinations/retl-destinations/customer-support/intercom.md)
+- [Slack](https://docs.squared.ai/guides/destinations/retl-destinations/team-collaboration/slack.md)
+- [Microsoft teams](https://docs.squared.ai/guides/destinations/retl-destinations/team-collaboration/microsoft-teams.md)
+- [Shopify](https://docs.squared.ai/guides/destinations/retl-destinations/e-commerce/shopify.md)
+- [Facebook product catalog](https://docs.squared.ai/guides/destinations/retl-destinations/e-commerce/facebook-product-catalog.md)
+- [Stripe](https://docs.squared.ai/guides/destinations/retl-destinations/payment/stripe.md)
+- [Salesforce Consumer Goods Cloud](https://docs.squared.ai/guides/destinations/retl-destinations/retail/salesforce-consumer-goods-cloud.md)
+- [Airtable](https://docs.squared.ai/guides/destinations/retl-destinations/productivity-tools/airtable.md)
+- [Google Sheets - Service Account](https://docs.squared.ai/guides/destinations/retl-destinations/productivity-tools/google-sheets.md): Google Sheets serves as an effective reverse ETL destination, enabling real-time data synchronization from data warehouses to a collaborative, user-friendly spreadsheet environment. It democratizes data access, allowing stakeholders to analyze, share, and act on insights without specialized skills.…
+- [Microsoft Excel](https://docs.squared.ai/guides/destinations/retl-destinations/productivity-tools/microsoft-excel.md)
+- [SFTP](https://docs.squared.ai/guides/destinations/retl-destinations/file-storage/sftp.md): Learn how to set up a SFTP destination connector in AI Squared to efficiently transfer data to your SFTP server.
+- [PostgreSQL](https://docs.squared.ai/guides/destinations/retl-destinations/database/postgresql.md): PostgreSQL popularly known as Postgres, is a powerful, open-source object-relational database system that uses and extends the SQL language combined with many features that safely store and scale data workloads.
+- [MariaDB](https://docs.squared.ai/guides/destinations/retl-destinations/database/maria_db.md)
+- [Oracle](https://docs.squared.ai/guides/destinations/retl-destinations/database/oracle.md)
+- [Pinecone DB](https://docs.squared.ai/guides/destinations/retl-destinations/database/pinecone_db.md)
+- [Qdrant](https://docs.squared.ai/guides/destinations/retl-destinations/database/qdrant.md)
+- [Weaviate](https://docs.squared.ai/guides/destinations/retl-destinations/database/weaviate.md): Connect AI Squared to Weaviate to sync vector data to your Weaviate collections.
+- [HTTP](https://docs.squared.ai/guides/destinations/retl-destinations/http/http.md): Learn how to set up a HTTP destination connector in AI Squared to efficiently transfer data to your HTTP destination.
+- [MicrosoftSQL](https://docs.squared.ai/guides/destinations/retl-destinations/database/ms_sql.md): Microsoft SQL Server (Structured Query Language) is a proprietary relational database management system developed by Microsoft. As a database server, it is a software product with the primary function of storing and retrieving data as requested by other software applications—which may run either on…
+- [Amazon S3](https://docs.squared.ai/guides/destinations/retl-destinations/file-storage/amazon_s3.md)
+- [Odoo](https://docs.squared.ai/guides/destinations/retl-destinations/crm/odoo.md)
+- [Weaviate](https://docs.squared.ai/guides/destinations/retl-destinations/database/weaviate.md): Connect AI Squared to Weaviate to sync vector data to your Weaviate collections.
+- [Overview](https://docs.squared.ai/guides/data-modelling/models/overview.md)
+- [SQL Editor](https://docs.squared.ai/guides/data-modelling/models/sql.md): SQL Editor for Data Modeling in AI Squared
+- [Table Selector](https://docs.squared.ai/guides/data-modelling/models/table-visualization.md)
+- [Overview](https://docs.squared.ai/guides/data-modelling/syncs/overview.md)
+- [Full Refresh](https://docs.squared.ai/guides/data-modelling/sync-modes/full-refresh.md): Full Refresh syncs replace existing data with new data.
+- [Incremental](https://docs.squared.ai/guides/data-modelling/sync-modes/incremental.md): Incremental sync only transfer new or updated data, minimizing data transfer
+- [Incremental - Cursor Field](https://docs.squared.ai/guides/data-modelling/sync-modes/cursor-incremental.md): Incremental Cursor Field sync transfers only new or updated data, minimizing data transfer using a cursor field.
+- [Overview](https://docs.squared.ai/sparx/overview.md): Your Business AI Powered in an Hour
+- [Use Cases](https://docs.squared.ai/sparx/use-cases.md): Real-world examples and before/after comparisons
+- [How Sparx Works](https://docs.squared.ai/sparx/architecture.md): System architecture and technical components
+- [Getting Started](https://docs.squared.ai/sparx/getting-started.md): How to get started with Sparx
+- [System Layout](https://docs.squared.ai/sparx/system-layout.md): Visual representation of Sparx platform components
+- [Overview](https://docs.squared.ai/overview.md)
+- [Terms of Use](https://docs.squared.ai/terms-of-use.md)
+- [Overview](https://docs.squared.ai/deployment-and-security/overview.md)
+- [Cloud (Managed by AI Squared)](https://docs.squared.ai/deployment-and-security/cloud.md): Learn how to access and use AI Squared's fully managed cloud deployment.
+- [Docker](https://docs.squared.ai/deployment-and-security/setup/docker-compose-dev.md)
+- [Environment Variables](https://docs.squared.ai/deployment-and-security/setup/environment-variables.md)
+- [Docker](https://docs.squared.ai/deployment-and-security/setup/docker-compose.md): Deploying Multiwoven using Docker
+- [Helm Charts	](https://docs.squared.ai/deployment-and-security/setup/helm.md)
+- [AWS EC2](https://docs.squared.ai/deployment-and-security/setup/ec2.md)
+- [AWS ECS](https://docs.squared.ai/deployment-and-security/setup/ecs.md): Coming soon...
+- [AWS EKS (Kubernetes)](https://docs.squared.ai/deployment-and-security/setup/eks.md): Coming soon...
+- [Google Cloud GKE (Kubernetes)](https://docs.squared.ai/deployment-and-security/setup/gke.md): Coming soon...
+- [Google Cloud Compute Engine](https://docs.squared.ai/deployment-and-security/setup/gce.md)
+- [Azure AKS (Kubernetes)](https://docs.squared.ai/deployment-and-security/setup/aks.md)
+- [Azure VMs](https://docs.squared.ai/deployment-and-security/setup/avm.md)
+- [Digital Ocean Droplets](https://docs.squared.ai/deployment-and-security/setup/dod.md): Coming soon...
+- [Digital Ocean Kubernetes](https://docs.squared.ai/deployment-and-security/setup/dok.md): Coming soon...
+- [Heroku](https://docs.squared.ai/deployment-and-security/setup/heroku.md): Coming soon...
+- [OpenShift](https://docs.squared.ai/deployment-and-security/setup/openshift.md): Coming soon...
+- [Overview](https://docs.squared.ai/deployment-and-security/auth/overview.md)
+- [Overview](https://docs.squared.ai/deployment-and-security/data-security-infra/overview.md)
+- [SOC 2 Type II](https://docs.squared.ai/deployment-and-security/security-and-compliance/overview.md)
+- [Introduction](https://docs.squared.ai/api-reference/introduction.md)
+- [List Connectors](https://docs.squared.ai/api-reference/connectors/list_connectors.md)
+- [Create Connector](https://docs.squared.ai/api-reference/connectors/create_connector.md)
+- [Get Connector](https://docs.squared.ai/api-reference/connectors/get_connector.md)
+- [Update Connector](https://docs.squared.ai/api-reference/connectors/update_connector.md)
+- [Delete Connector](https://docs.squared.ai/api-reference/connectors/delete_connector.md)
+- [Connector Catalog](https://docs.squared.ai/api-reference/connectors/discover.md)
+- [Query Source](https://docs.squared.ai/api-reference/connectors/query_source.md)
+- [Connector Definitions](https://docs.squared.ai/api-reference/connector_definitions/connector_definitions.md)
+- [Connector Definition](https://docs.squared.ai/api-reference/connector_definitions/connector_definition.md)
+- [Check Connection](https://docs.squared.ai/api-reference/connector_definitions/check_connection.md)
+- [Get Models](https://docs.squared.ai/api-reference/models/get-all-models.md)
+- [Create Model](https://docs.squared.ai/api-reference/models/create-model.md)
+- [Get Model](https://docs.squared.ai/api-reference/models/get-model.md)
+- [Update Model](https://docs.squared.ai/api-reference/models/update-model.md)
+- [Delete Model](https://docs.squared.ai/api-reference/models/delete-model.md)
+- [List Syncs](https://docs.squared.ai/api-reference/syncs/get_syncs.md)
+- [Create Sync](https://docs.squared.ai/api-reference/syncs/create_sync.md)
+- [Get Sync](https://docs.squared.ai/api-reference/syncs/show_sync.md)
+- [Update Sync](https://docs.squared.ai/api-reference/syncs/update_sync.md)
+- [Delete Sync](https://docs.squared.ai/api-reference/syncs/delete_sync.md)
+- [Manual Sync Trigger](https://docs.squared.ai/api-reference/syncs/manual_sync_trigger.md): Trigger a manual Sync by providing the sync ID.
+- [Manual Sync Cancel](https://docs.squared.ai/api-reference/syncs/manual_sync_cancel.md): Cancel a Manual Sync using the sync ID.
+- [Test Sync](https://docs.squared.ai/api-reference/syncs/test_sync.md): Triggers a test for the specified sync using the sync ID.
+- [Get Sync Configurations](https://docs.squared.ai/api-reference/syncs/sync_configuration.md)
+- [List Sync Runs](https://docs.squared.ai/api-reference/sync_runs/get_sync_runs.md): Retrieves a list of sync runs for a specific sync, optionally filtered by status.
+- [Sync Run](https://docs.squared.ai/api-reference/sync_runs/get_sync_run.md): Retrieves a sync run using sync_run_id for a specific sync.
+- [List Sync Records](https://docs.squared.ai/api-reference/sync_records/get_sync_records.md): Retrieves a list of sync records for a specific sync run, optionally filtered by status.
+- [Create Catalog](https://docs.squared.ai/api-reference/catalogs/create_catalog.md)
+- [Update Catalog](https://docs.squared.ai/api-reference/catalogs/update_catalog.md)
+- [2026 Releases](https://docs.squared.ai/release-notes/2026.md): Release updates for the year 2026
+- [January 2026 Releases](https://docs.squared.ai/release-notes/2026/January-2026.md): Release updates for the month of January 2026
+- [February 2026 Releases](https://docs.squared.ai/release-notes/2026/February-2026.md): Release updates for the month of February 2026
+- [March 2026 Releases](https://docs.squared.ai/release-notes/2026/March-2026.md): Release updates for the month of March 2026
+- [April 2026 Releases](https://docs.squared.ai/release-notes/2026/April-2026.md): Release updates for the month of April 2026
+- [June 2026 Releases](https://docs.squared.ai/release-notes/2026/June-2026.md): Release updates for the month of June 2026
+- [July 2026 Releases](https://docs.squared.ai/release-notes/2026/July-2026.md): Release updates for the month of July 2026
+- [August 2026 Releases](https://docs.squared.ai/release-notes/2026/August-2026.md): Release updates for the month of August 2026
+- [September 2026 Releases](https://docs.squared.ai/release-notes/2026/September-2026.md): Release updates for the month of September 2026
+- [2025 Releases](https://docs.squared.ai/release-notes/2025.md): Release updates for the year 2025
+- [January 2025 Releases](https://docs.squared.ai/release-notes/2025/January-2025.md): Release updates for the month of January
+- [February 2025 Releases](https://docs.squared.ai/release-notes/2025/Feb-2025.md): Release updates for the month of February
+- [March 2025 Releases](https://docs.squared.ai/release-notes/2025/March-2025.md): Release updates for the month of March
+- [April 2025 Releases](https://docs.squared.ai/release-notes/2025/April-2025.md): Release updates for the month of April
+- [May 2025 Releases](https://docs.squared.ai/release-notes/2025/May-2025.md): Release updates for the month of May
+- [June 2025 Releases](https://docs.squared.ai/release-notes/2025/June-2025.md): Release updates for the month of June
+- [July 2025 Releases](https://docs.squared.ai/release-notes/2025/July-2025.md): Release updates for the month of July
+- [August 2025 Releases](https://docs.squared.ai/release-notes/2025/August-2025.md): Release updates for the month of August
+- [September 2025 Releases](https://docs.squared.ai/release-notes/2025/September-2025.md): Release updates for the month of September
+- [October 2025 Releases](https://docs.squared.ai/release-notes/2025/October-2025.md): Release updates for the month of October
+- [November 2025 Releases](https://docs.squared.ai/release-notes/2025/November-2025.md): Release updates for the month of November
+- [December 2025 Releases](https://docs.squared.ai/release-notes/2025/December-2025.md): Release updates for the month of December
+- [2024 releases](https://docs.squared.ai/release-notes/2024.md)
+- [May 2024 releases](https://docs.squared.ai/release-notes/2024/May-2024.md): Release updates for the month of May
+- [June 2024 releases](https://docs.squared.ai/release-notes/2024/June-2024.md): Release updates for the month of June
+- [July 2024 releases](https://docs.squared.ai/release-notes/2024/July-2024.md): Release updates for the month of July
+- [August 2024 releases](https://docs.squared.ai/release-notes/2024/August-2024.md): Release updates for the month of August
+- [September 2024 releases](https://docs.squared.ai/release-notes/2024/September-2024.md): Release updates for the month of September
+- [October 2024 releases](https://docs.squared.ai/release-notes/2024/October-2024.md): Release updates for the month of October
+- [November 2024 releases](https://docs.squared.ai/release-notes/2024/November-2024.md): Release updates for the month of November
+- [December 2024 releases](https://docs.squared.ai/release-notes/2024/December-2024.md): Release updates for the month of December
+
+## OpenAPI Specs
+
+- [openapi](/api-reference/openapi.yml)

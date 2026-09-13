@@ -64,5 +64,15 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-AI Squared is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+AI Squared is an enterprise data-and-AI integration platform. It connects data sources (Snowflake,
+BigQuery, Databricks, Redshift, PostgreSQL, S3, Salesforce and more) to AI/ML model endpoints
+(OpenAI, Anthropic, Google Vertex, AWS Bedrock, SageMaker, WatsonX), and pushes the resulting
+insights back into the business applications where work happens. The company acquired Multiwoven,
+the open-source Reverse ETL / composable CDP project, in 2024 and develops it as the open core of
+the platform under AGPL-3.0.
+
+- Website: https://aisquared.ai/
+- Documentation: https://docs.squared.ai/home/welcome
+- API reference: https://docs.squared.ai/api-reference/introduction
+- API base URL: https://api.squared.ai/api/v1/
+- Source: https://github.com/Multiwoven/multiwoven

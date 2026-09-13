@@ -1,0 +1,77 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.squared.ai/api-reference/introduction, https://docs.squared.ai/release-notes/2026,
+  https://github.com/Multiwoven/multiwoven (releases + release-notes.md), and live probes of
+  status.squared.ai / status.aisquared.ai
+versioning:
+  style: uri-path
+  current: v1
+  base_url: https://api.squared.ai/api/v1/
+  spec_version: 1.0.0
+  policy_published: false
+  note: >-
+    No written versioning policy. The API is pathed /api/v1 and the published documents declare
+    info.version 1.0.0; there is no statement of how long a version is supported or how a
+    successor would be introduced.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  evidence: >-
+    No operation in the 29 published OpenAPI documents carries deprecated: true. No Sunset or
+    Deprecation response header is documented. No deprecation, migration or end-of-life page
+    exists in the documentation index (23KB llms.txt, 202 pages - searched).
+  note: >-
+    The legacy first-party Python SDK (pypi aisquared, last release 2024-07-08) targets the
+    previous product generation and has effectively been superseded by the Multiwoven-era
+    platform, but AI Squared has published no deprecation notice for it. Undeclared decay, not a
+    declared deprecation.
+sla:
+  published: false
+  uptime_target: null
+  note: >-
+    No public SLA, uptime commitment or credit schedule. Pricing is quote-only and the tier
+    descriptions say "standard support" without defining it.
+status_page:
+  published: false
+  probes:
+  - url: https://status.squared.ai/
+    result: DNS does not resolve (curl exit 6, no HTTP status)
+    checked: '2026-09-13'
+  - url: https://status.aisquared.ai/
+    result: DNS does not resolve (curl exit 6, no HTTP status)
+    checked: '2026-09-13'
+  note: >-
+    No status page is linked from the website, the documentation index or the API reference
+    either. An operator has no public incident or uptime surface for api.squared.ai.
+support:
+  channels:
+  - type: community
+    url: https://docs.squared.ai/open-source/community-support/overview
+    detail: Slack community channel plus GitHub Issues on the Multiwoven repositories.
+  - type: email
+    value: support@squared.ai
+  - type: security-email
+    value: security@squared.ai
+  - type: issues
+    url: https://github.com/Multiwoven/multiwoven/issues
+release_management:
+  changelog: changelog/ai-squared-changelog.yml
+  docs_release_notes: https://docs.squared.ai/release-notes/2026
+  open_source_releases: https://github.com/Multiwoven/multiwoven/releases
+  open_source_process: https://docs.squared.ai/open-source/community-support/release-process
+  commit_conventions: https://docs.squared.ai/open-source/community-support/commit-message-guidelines
+  cadence: monthly dated release notes, continuous since 2024-05
+  breaking_change_labelling: none
+open_source_core:
+  repository: https://github.com/Multiwoven/multiwoven
+  license: AGPL-3.0
+  last_push: '2026-09-11'
+  stars: 1673
+  note: >-
+    The open-source Multiwoven server is the core of the commercial platform and is actively
+    developed - it is the strongest liveness signal available for this provider, stronger than
+    anything on the hosted surface, which publishes neither a status page nor an SLA.

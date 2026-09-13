@@ -1,0 +1,179 @@
+generated: '2026-09-13'
+method: probed
+source: live GET of the named /.well-known/ paths on every host this record knows
+note: >-
+  Ten named paths were probed on six hosts (aisquared.ai, www.aisquared.ai, squared.ai,
+  docs.squared.ai, api.squared.ai, app.squared.ai). Two real documents were served, both on the
+  documentation host docs.squared.ai: an A2A agent card and an MCP discovery manifest. No
+  security.txt, no OAuth/OIDC metadata and no api-catalog are published anywhere. app.squared.ai
+  is a single-page application whose catch-all answers HTTP 200 with the same 1,018-byte HTML
+  shell for every /.well-known/ path — every one of those 200s is recorded here as a miss, not a
+  document.
+hosts:
+- host: aisquared.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: www.aisquared.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: squared.ai
+  note: squared.ai redirects to aisquared.ai; probed independently and answered identically.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: docs.squared.ai
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/ai-squared-agent-card.json
+    note: >-
+      Real A2A AgentCard (name, url, version, protocolVersion 0.3, capabilities object, skills
+      array). Saved verbatim under a2a/ and graded in a2a/ai-squared-a2a.yml.
+  - path: /.well-known/mcp.json
+    status: 200
+    content_type: application/json
+    file: ai-squared-mcp.json
+    note: >-
+      MCP discovery manifest naming one anonymous HTTP MCP server. Saved verbatim; the endpoint is
+      probed and recorded in mcp/ai-squared-mcp.yml.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: api.squared.ai
+  note: The API host answers 404 with a zero-length body on every /.well-known/ path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: app.squared.ai
+  note: >-
+    SPA catch-all. Every path below returned HTTP 200 with the same 1,018-byte text/html
+    application shell, not a document. Recorded as misses per the false-positive rule.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/mcp.json
+    status: 200
+    content_type: text/html
+    document: false
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    content_type: text/html
+    document: false

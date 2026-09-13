@@ -1,0 +1,71 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  registry metadata endpoints (rubygems.org/api/v1/gems, pypi.org/pypi/<pkg>/json,
+  registry.npmjs.org) plus the AISquaredInc and Multiwoven GitHub organizations
+note: >-
+  AI Squared publishes no first-party client SDK for its REST API in any language. The two
+  first-party packages that exist are the Ruby integrations engine that powers the open-source
+  Multiwoven server, and a legacy Python SDK for the older AI Squared model-delivery stack. npm
+  was searched for "aisquared" and "multiwoven" and for the exact names aisquared, ai-squared and
+  @aisquared/core - all 404 / no results. PyPI carries no "multiwoven" package.
+packages:
+- name: multiwoven-integrations
+  registry: rubygems
+  url: https://rubygems.org/gems/multiwoven-integrations
+  official: true
+  language: ruby
+  version: 0.41.9
+  published: '2026-09-10'
+  license: MIT
+  downloads: 135433
+  source_code: https://github.com/Multiwoven/multiwoven/tree/main/integrations
+  homepage: https://www.multiwoven.com/
+  role: >-
+    The connector/integration engine of the open-source Multiwoven server - the source and
+    destination connectors themselves. It is a server-side component, not a client library for
+    the api.squared.ai REST API.
+  currency: >-
+    Actively maintained - last release 2026-09-10, three days before this pass.
+- name: aisquared
+  registry: pypi
+  url: https://pypi.org/project/aisquared/
+  official: true
+  language: python
+  version: 0.3.13
+  published: '2024-07-08'
+  license: Apache-2.0
+  source_code: https://github.com/AISquaredInc/aisquared
+  role: >-
+    "Utilities for interacting with the AI Squared Technology Stack" - builds .air configuration
+    packages (harvesting, preprocessing, analytic, rendering and feedback objects) for the AI
+    Squared browser extension. It predates the Multiwoven-era REST API and does not wrap
+    api.squared.ai.
+  currency: >-
+    DECAY SIGNAL. Last release 2024-07-08, more than two years before this pass and before most
+    of the current platform surface (workflows, agents, MCP tools, the api.squared.ai REST API)
+    shipped. A consumer installing it today gets a client for the previous product generation.
+sdk_gap:
+  rest_api_client_sdks: 0
+  note: >-
+    The AI Squared REST API documented at docs.squared.ai/api-reference has no published client
+    library in any registry. Integrators call it with raw HTTP and a JWT bearer token.
+registries_checked:
+- registry: rubygems
+  result: 1 first-party package
+- registry: pypi
+  result: 1 first-party package (legacy)
+- registry: npm
+  result: none - searched "aisquared" (0 results) and "multiwoven" (1 unrelated third-party
+    package, @multiwoven-user/opencode-plugin-otel); exact names aisquared, ai-squared and
+    @aisquared/core all 404
+- registry: maven-central
+  result: not applicable - no JVM client published or referenced in the docs
+- registry: nuget
+  result: not applicable - no .NET client published or referenced in the docs
+- registry: pkg.go.dev
+  result: not applicable - no Go client published or referenced in the docs
+- registry: crates.io
+  result: not applicable - no Rust client published or referenced in the docs
+- registry: packagist
+  result: not applicable - no PHP client published or referenced in the docs

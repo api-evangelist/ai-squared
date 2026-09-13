@@ -1,0 +1,154 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/ai-squared-openapi.yml, https://docs.squared.ai/api-reference/introduction,
+  https://docs.squared.ai/open-source/guides/architecture/multiwoven-protocol,
+  https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+summary: >-
+  AI Squared makes one substantiated compliance claim (SOC 2 Type II) and publishes one first-party
+  connector protocol (the Multiwoven Protocol). It declares conformance to no cross-cutting API
+  standard - no OAuth 2.0 on its own API, no OpenID Connect, no RFC 9457, no RFC 8594, no
+  RFC 9116, no OData or JSON:API media type. The reverse-ETL / data-activation market it sells
+  into has no ratified interchange standard, so the absence of a domain standard here is a
+  property of the market, not a deficiency of the provider.
+conformance:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    openapi/ai-squared-openapi.yml - the 29 per-operation documents AI Squared publishes at
+    docs.squared.ai/api-reference each declare openapi: 3.0.1 with paths, parameters, requestBody
+    and responses.
+- id: json-schema
+  conforms: true
+  evidence: >-
+    OpenAPI 3.0 Schema Objects throughout the contract, plus the Multiwoven Protocol's Stream
+    object, which carries a json_schema field describing each stream -
+    https://docs.squared.ai/open-source/guides/architecture/multiwoven-protocol
+- id: http-bearer-jwt
+  conforms: true
+  evidence: >-
+    components.securitySchemes.bearerAuth = {type: http, scheme: bearer, bearerFormat: JWT}, applied
+    per-operation. Documented at https://docs.squared.ai/api-reference/introduction
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 securityScheme in the contract and no OAuth flow documented for the AI Squared API
+    itself. OAuth 2.0 client-credentials appears only as an option the platform can use when it
+    CONSUMES a customer's HTTP connector (July 2026 release notes) - AI Squared as client, not as
+    authorization server.
+- id: oidc
+  conforms: false
+  evidence: >-
+    /.well-known/openid-configuration returns 404 on aisquared.ai, docs.squared.ai and
+    api.squared.ai (probed 2026-09-13). No openIdConnect securityScheme in the contract.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    No application/problem+json response anywhere in the contract; error responses are bare status
+    codes with a description string. See errors/ai-squared-problem-types.yml
+- id: rfc8594
+  conforms: false
+  evidence: No Sunset or Deprecation header documented; no deprecation policy published.
+- id: rfc9116
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt returns 404 on every host probed 2026-09-13, although a disclosure
+    address (security@squared.ai) is published in prose.
+- id: pagination
+  conforms: true
+  evidence: >-
+    Two documented styles - page / page_size (max 100) in the API reference introduction, and
+    page[number] / page[size] on the sync-run and sync-record operations in the contract.
+    Collection responses carry links {self, first, prev, next, last}.
+  note: The two styles are not reconciled in the docs. See conventions/ai-squared-conventions.yml
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or equivalent anywhere in the contract or the documentation index.
+    conventions idempotency.coverage = none.
+- id: json-api
+  conforms: false
+  evidence: >-
+    The response envelope resembles JSON:API - a top-level data member with a links object
+    carrying self/first/prev/next/last, and page[number]/page[size] bracketed pagination - but the
+    media type is application/json rather than application/vnd.api+json, resources are not typed
+    resource objects with type/id/attributes, and no JSON:API conformance is claimed. Recorded as
+    resemblance, not conformance.
+- id: odata
+  conforms: false
+  evidence: No $metadata surface, no OData query options.
+- id: scim
+  conforms: false
+  evidence: >-
+    No SCIM schema URN, no /scim/v2 surface, and no user-provisioning documentation. (The
+    AISquaredInc GitHub organization contains sample-node-scim-server, a debugging sample; it is
+    not a documented AI Squared product surface and is not counted here.)
+- id: fhir
+  conforms: false
+  evidence: Not a healthcare-data provider; no FHIR resources.
+- id: fapi
+  conforms: false
+  evidence: Not a financial-grade API; no FAPI profile claimed.
+- id: psd2
+  conforms: false
+  evidence: Not applicable to this market.
+- id: soc2-type-ii
+  conforms: true
+  evidence: >-
+    https://docs.squared.ai/deployment-and-security/security-and-compliance/overview - "We are
+    SOC 2 Type II certified". Certification body, report period and report-request process are
+    not published. See security/ai-squared-trust-center.yml
+- id: hipaa
+  conforms: false
+  evidence: >-
+    Claimed as a footer badge on https://aisquared.ai/security-compliance-teams/ with no BAA
+    offer, scope statement or attestation detail. Recorded as an unsubstantiated claim rather than
+    a conformance.
+- id: ccpa
+  conforms: false
+  evidence: >-
+    Claimed as a footer badge on https://aisquared.ai/security-compliance-teams/. A privacy-regime
+    claim without published detail; a Data Processing Agreement is published at
+    https://aisquared.ai/data-processing-agreement/
+domain_standards:
+- id: multiwoven-protocol
+  name: Multiwoven Protocol
+  first_party: true
+  industry_standard: false
+  conforms: true
+  evidence: >-
+    https://docs.squared.ai/open-source/guides/architecture/multiwoven-protocol and the reference
+    implementation at
+    https://github.com/Multiwoven/multiwoven-integrations/blob/main/lib/multiwoven/integrations/protocol/protocol.rb
+  detail: >-
+    AI Squared publishes and implements its own connector protocol - Source, Destination, Stream,
+    Catalog, Model, Sync, ConnectorSpecification, all enveloped in a MultiwovenMessage - so that
+    third parties can build connectors without knowledge of the core platform. It surfaces in the
+    public REST API as the catalog.streams[] structure on POST/PUT /api/v1/catalogs
+    (json_schema, batch_support, batch_size, request_method, request_rate_limit,
+    request_rate_limit_unit, request_rate_concurrency) and as the source/destination/model/stream
+    /sync_mode/cursor_field fields on the sync operations.
+  note: >-
+    This is a vendor protocol that AI Squared governs, not a multi-vendor standard. It is recorded
+    as a domain protocol the provider publishes, and deliberately NOT as domain-standard
+    conformance.
+- id: airbyte-protocol
+  name: Airbyte Protocol
+  conforms: false
+  evidence: >-
+    The Multiwoven Protocol's vocabulary is Airbyte-Protocol-shaped - ConnectorSpecification,
+    Catalog, Stream, supported_sync_modes, source_defined_cursor, default_cursor_field,
+    source_defined_primary_key, namespace, destination_sync_mode. AI Squared nowhere claims
+    Airbyte Protocol conformance, publishes no compatibility matrix, and the message envelope is
+    its own (MultiwovenMessage). Recorded as lineage, not conformance - an integrator cannot
+    assume an Airbyte connector drops in.
+- id: singer-spec
+  conforms: false
+  evidence: No Singer tap/target compatibility claimed or documented.
+- id: openlineage
+  conforms: false
+  evidence: No lineage-event emission documented, despite the platform's audit-trail claims.
+market_note: >-
+  Reward-only check. The reverse-ETL / data-activation / composable-CDP market has no ratified
+  interchange standard - the field is governed by de facto vendor protocols (Airbyte's, Singer's,
+  Multiwoven's). No standard was invented here to fill the slot.

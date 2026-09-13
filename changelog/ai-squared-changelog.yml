@@ -1,0 +1,72 @@
+generated: '2026-09-13'
+method: searched
+source: https://docs.squared.ai/release-notes/2026
+name: AI Squared Release Notes
+docs: https://docs.squared.ai/release-notes/2026
+scheme: >-
+  Monthly, dated release-note pages grouped by year (2024, 2025, 2026), each month sectioned by
+  change class - Features, Enhancements, Bug Fixes, Chores/Maintenance/Miscellaneous. Entries are
+  prose with nested bullets; they are not tied to a semantic version number and the REST API is
+  not separately versioned in the notes.
+current_version: >-
+  Not published. The API itself reports info.version 1.0.0 in the specs on
+  docs.squared.ai/api-reference and is pathed /api/v1; the release notes are dated, not numbered.
+cadence: monthly
+coverage: 2024-05 through 2026-09 (continuous)
+breaking_change_signalling: >-
+  None. No release note in the recent window is labelled breaking, and there is no separate
+  deprecation or migration section in the changelog.
+entries:
+- date: '2026-09'
+  url: https://docs.squared.ai/release-notes/2026/September-2026.md
+  classes:
+  - chores
+  breaking: false
+  highlights:
+  - Agentic Coding GitHub integration hardened - daily token rotation with rate-limit backoff,
+    last-commit-hash recorded alongside code hash, structured commit intents, merge-conflict
+    resolution with ours/theirs strategies.
+  - Git and webhook endpoints rate limited against request floods.
+  - New API endpoint returning the Git session-event history of an Agentic Coding session -
+    chronological, metadata redacted, paginated to a maximum of 100 items, rate limited to 60
+    requests per minute per IP.
+  - Backwards compatibility for older Agentic Coding sandbox images - Git installed automatically
+    when absent.
+- date: '2026-08'
+  url: https://docs.squared.ai/release-notes/2026/August-2026.md
+  classes:
+  - features
+  - bug-fixes
+  - chores
+  breaking: false
+  highlights:
+  - Model Hub improvements; App Builder security scanner.
+  - GitHub source-control integration provider on the server; conflict-handling API and conflict
+    status.
+  - AI model sample payloads made cheap and editable; request logs now include Origin and Referer.
+- date: '2026-07'
+  url: https://docs.squared.ai/release-notes/2026/July-2026.md
+  classes:
+  - enhancements
+  - maintenance
+  breaking: false
+  highlights:
+  - OAuth 2.0 client-credentials authentication for HTTP connectors.
+  - Cookie-based authentication with CSRF protection; refinements to cookie auth and CSRF
+    handling.
+  - Configurable allowed origins for embedded Data Apps and Agentic Apps, with an Allowed Origins
+    admin UI in Settings.
+  - Expanded HTTP source response parsing; async deployment creation for agentic coding.
+- date: '2026-06'
+  url: https://docs.squared.ai/release-notes/2026/June-2026.md
+  classes:
+  - enhancements
+  - miscellaneous
+  breaking: false
+  highlights:
+  - Extended Member role for vector-database management.
+  - Integrations gem version updated.
+note: >-
+  A second, independent change stream exists for the open-source core - GitHub Releases on
+  Multiwoven/multiwoven and the release-notes.md in that repository. The docs release notes are
+  the platform-wide record and are the surface pointed at here.

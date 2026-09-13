@@ -1,0 +1,86 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.squared.ai/activation/data-apps/visualizations/embed,
+  https://docs.squared.ai/activation/data-apps/browser-extension/platform,
+  https://docs.squared.ai/activation/data-apps/browser-extension/headless-ext,
+  https://docs.squared.ai/workflows/chat-assistants
+summary: >-
+  AI Squared's client-side surface is not an SDK or a web-component library - it is a set of
+  hosted, embeddable delivery vehicles for "Data Apps" (a model's output rendered as a
+  visualization). There are three families: iframe embeds guarded by an origin allowlist, two
+  Chrome extensions, and embedded chat assistants. None is distributed through a package registry;
+  the extensions come from the Chrome Web Store or as a developer-mode zip, and the iframe snippet
+  is generated per Data App in the dashboard.
+families:
+- name: Iframe embed
+  kind: hosted-embed
+  distribution: snippet generated in the AI Squared dashboard (Data Apps > Embed Options > IFrame)
+  docs: https://docs.squared.ai/activation/data-apps/visualizations/embed
+  loader: null
+  description: >-
+    Paste the generated <iframe> snippet into a CRM, support tool, internal dashboard or web app to
+    render a configured Data App in place.
+  security:
+    model: explicit origin allowlist
+    scopes:
+    - Organization (every workspace in the organization)
+    - Workspace (only the workspace where the origin was added)
+    permission: Embed Settings (granted to organization admins by default; read access grantable
+      to non-admin roles)
+    enforcement: >-
+      Published apps send Content-Security-Policy: frame-ancestors permitting only allowlisted
+      origins; a non-allowlisted host page is blocked by CORS or a frame-ancestors violation.
+    propagation: >-
+      Origin changes are cached and refresh on all servers within about 60 seconds; the API
+      response carries a refresh_interval_seconds value.
+    note: >-
+      The allowlist covers both Data App embeds and published Agentic App pages. Configurable
+      allowed origins and the Allowed Origins admin UI shipped in the July 2026 release.
+- name: Platform Extension
+  kind: browser-extension
+  browsers:
+  - Chrome
+  - Edge
+  distribution: Chrome Web Store ("AI Squared - Data Apps")
+  docs: https://docs.squared.ai/activation/data-apps/browser-extension/platform
+  version: null
+  version_note: >-
+    The Chrome Web Store listing does not publish a machine-readable version endpoint and the docs
+    pin no version; a consumer cannot tell which build they are installing. Recorded as null
+    rather than guessed.
+  description: >-
+    No-code delivery. A business user installs the extension, logs in, picks an organization, and
+    "pins" a Data App to a screen in a host application (Salesforce, HubSpot, an internal app).
+    Output renders in a floating panel without modifying the host application.
+- name: Headless Extension
+  kind: browser-extension
+  browsers:
+  - Chrome
+  distribution: >-
+    Zip download from Settings > Organization > Headless, loaded unpacked in Chrome developer mode
+  docs: https://docs.squared.ai/activation/data-apps/browser-extension/headless-ext
+  version: null
+  version_note: >-
+    Distributed as an unversioned zip from inside the product; no registry, no pinned URL, no
+    published build number.
+  description: >-
+    Runs .air model files directly against the active tab - harvesting, automation and insight
+    overlay - without embedding anything in the page. Must be enabled per organization before it
+    will run.
+  artifact_format: .air model card files, built with the first-party Python SDK (pypi aisquared)
+- name: Embedded Chat Assistants
+  kind: hosted-embed
+  docs: https://docs.squared.ai/workflows/chat-assistants
+  description: >-
+    Published AI workflows deployed as interactive chat assistants with file upload, embeddable
+    into other applications. Covered by the same origin allowlist as Data App embeds.
+not_found:
+- web-component library
+- npm-distributed element package
+- CDN-hosted loader script with a pinned version
+- React/Vue/Angular component package
+note: >-
+  Distinct from packages/ai-squared-packages.yml, which records the two first-party REGISTRY
+  packages (a Ruby integrations gem and a legacy Python SDK). Nothing in this file is installable
+  from a package registry.

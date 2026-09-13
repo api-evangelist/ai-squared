@@ -1,23 +1,174 @@
 aid: ai-squared
 name: AI Squared
-description: 'AI Squared is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'AI Squared is an enterprise data-and-AI integration platform that connects
+  data sources (Snowflake, BigQuery, Databricks, Redshift, PostgreSQL, S3, Salesforce
+  and more) to AI/ML model endpoints (OpenAI, Anthropic, Google Vertex, AWS Bedrock,
+  SageMaker, WatsonX) and then pushes the resulting insights back into the business
+  applications where work happens. The company acquired Multiwoven, the open-source
+  Reverse ETL / composable CDP project, in 2024 and now develops it as the open core
+  of the platform under AGPL-3.0. Its public REST API at api.squared.ai covers
+  connectors, connector definitions, models, catalogs, syncs, sync runs and sync
+  records, authenticated with a JWT bearer token. AI Squared is SOC 2 Type II certified
+  and ships SaaS, cloud, on-premise and air-gapped federal deployments.'
+image: https://i0.wp.com/aisquared.ai/wp-content/uploads/2026/06/screenshot.png
 url: https://raw.githubusercontent.com/api-evangelist/ai-squared/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-13'
 modified: '2026-09-13'
+position: Producing
 tags:
-- Company
-apis: []
+- Data Integration
+- Reverse ETL
+- Artificial Intelligence
+- Machine Learning
+- Customer Data Platform
+- Data Activation
+- Workflow Automation
+- Open Source
+- MCP
+- Enterprise
+tags_raw:
+- data-integration
+- reverse-etl
+- artificial-intelligence
+- machine-learning
+- customer-data-platform
+- data-activation
+- workflow-automation
+- open-source
+- mcp
+- enterprise
+apis:
+- aid: ai-squared:ai-squared-api
+  name: AI Squared API
+  description: 'REST API for the AI Squared platform covering connectors (data and
+    AI/ML sources and destinations), connector definitions and connection checks,
+    models, catalogs, syncs, scheduled/manual sync triggers, sync runs and sync
+    records. JSON request and response bodies, JWT bearer authentication, page /
+    page_size pagination capped at 100 items, and a documented 100 requests-per-minute
+    rate limit returning 429.'
+  image: https://i0.wp.com/aisquared.ai/wp-content/uploads/2026/06/screenshot.png
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - Data Integration
+  - Reverse ETL
+  - Data Activation
+  - Connectors
+  - Syncs
+  tags_raw:
+  - data-integration
+  - reverse-etl
+  - data-activation
+  - connectors
+  - syncs
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: Overlay
+    url: overlays/ai-squared-openapi-overlay.yaml
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+common:
+- type: Website
+  url: https://aisquared.ai/
+- type: DeveloperPortal
+  url: https://docs.squared.ai/home/welcome
+- type: Documentation
+  url: https://docs.squared.ai/home/welcome
+- type: APIReference
+  url: https://docs.squared.ai/api-reference/introduction
+- type: GettingStarted
+  url: https://docs.squared.ai/getting-started/introduction
+- type: Support
+  url: https://docs.squared.ai/open-source/community-support/overview
+- type: Blog
+  url: https://aisquared.ai/blog/
+- type: BlogRSS
+  url: https://aisquared.ai/feed/
+- type: GitHubOrganization
+  url: https://github.com/Multiwoven
+- type: GitHubOrganization
+  url: https://github.com/AISquaredInc
+- type: SourceCode
+  url: https://github.com/Multiwoven/multiwoven
+- type: Pricing
+  url: https://aisquared.ai/pricing/
+- type: SignUp
+  url: https://app.squared.ai/
+- type: TermsOfService
+  url: https://aisquared.ai/terms-of-service/
+- type: PrivacyPolicy
+  url: https://aisquared.ai/privacy-policy/
+- type: Security
+  url: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+- type: Compliance
+  url: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+- type: OpenAPI
+  url: openapi/ai-squared-openapi.yml
+- type: LLMsTxt
+  url: llms/ai-squared-llms.txt
+- type: MCPServer
+  url: mcp/ai-squared-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/ai-squared-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/ai-squared-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Packages
+  url: packages/ai-squared-packages.yml
+- type: SDKs
+  url: packages/ai-squared-packages.yml
+- type: WellKnown
+  url: well-known/ai-squared-well-known.yml
+- type: Conventions
+  url: conventions/ai-squared-conventions.yml
+- type: RateLimits
+  url: rate-limits/ai-squared-rate-limits.yml
+- type: Plans
+  url: plans/ai-squared-plans-pricing.yml
+- type: Authentication
+  url: authentication/ai-squared-authentication.yml
+- type: ErrorCatalog
+  url: errors/ai-squared-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/ai-squared-lifecycle.yml
+- type: ChangeLog
+  url: changelog/ai-squared-changelog.yml
+- type: Conformance
+  url: conformance/ai-squared-conformance.yml
+- type: DomainSecurity
+  url: security/ai-squared-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/ai-squared-vulnerability-disclosure.yml
+- type: DataModel
+  url: data-model/ai-squared-data-model.yml
+- type: Overlay
+  url: overlays/ai-squared-openapi-overlay.yaml
+- type: Components
+  url: components/ai-squared-components.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
-common:
-- type: Website
-  url: https://www.nasdaqprivatemarket.com/
+x-enrichment:
+  date: '2026-09-13'
+  status: enriched
+  artifacts_added: 28
+  pass: local-v3

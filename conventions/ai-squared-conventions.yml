@@ -1,0 +1,180 @@
+generated: '2026-09-13'
+method: derived
+source: >-
+  openapi/ai-squared-openapi.yml + https://docs.squared.ai/api-reference/introduction (searched)
+summary: >-
+  Cross-cutting runtime semantics for the AI Squared REST API, derived from the provider's own
+  published OpenAPI documents and the API reference introduction. The API is a conventional
+  resource-oriented JSON REST surface with JWT bearer auth and two pagination styles; it publishes
+  no idempotency mechanism, no request-id tracing header, no rate-limit response headers and no
+  error envelope.
+authentication:
+  style: http-bearer
+  scheme: bearer
+  bearer_format: JWT
+  header: 'Authorization: Bearer <YOUR_JWT_TOKEN>'
+  token_source: Generated from the AI Squared dashboard; rotatable by the customer.
+  applied: >-
+    Declared once in components.securitySchemes and applied per-operation as
+    security: [{bearerAuth: []}]. The documents also carry a top-level security: [] (empty),
+    which in OpenAPI means "no auth by default" - the effective requirement comes from the
+    per-operation blocks.
+  docs: https://docs.squared.ai/api-reference/introduction
+  detail: authentication/ai-squared-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  header: null
+  retention: null
+  evidence: >-
+    The string "idempoten" does not appear anywhere in the 29 published OpenAPI documents or in
+    the 23KB llms.txt documentation index. No Idempotency-Key (or equivalent) header is declared
+    on any operation, and the docs describe no replay-protection or safe-retry mechanism.
+  consequence: >-
+    Every POST on this API is unguarded against replay. An agent that times out on
+    POST /api/v1/syncs, POST /api/v1/connectors or POST /api/v1/schedule_syncs and retries has no
+    published way to avoid creating a duplicate resource or firing a duplicate sync.
+  natural_safety: >-
+    The PUT operations (connectors, models, syncs, catalogs) are full replacements and are
+    naturally idempotent by HTTP semantics; the DELETEs are idempotent in effect. That is HTTP
+    doing the work, not a provider mechanism, and it is recorded here so the "none" verdict is not
+    mistaken for "unsafe everywhere".
+reversibility:
+  grade: documented
+  grade_basis: >-
+    A real reversal operation exists and is documented for the sync-trigger write, but no
+    published document states a window inside which it works, so this cannot be graded verified.
+  write_surfaces:
+  - surface: Manual sync trigger
+    write: POST /api/v1/schedule_syncs (manualSyncTrigger)
+    reversal: DELETE /api/v1/schedule_syncs/{sync_id} (cancelSyncTrigger)
+    reversal_kind: cancel
+    window: null
+    window_note: >-
+      The docs state only "Cancel a Manual Sync using the sync ID." Nothing states whether a sync
+      already in flight can be cancelled, whether rows already written to the destination are
+      rolled back, or by when the call must be made. NOT ASSERTED HERE.
+    docs: https://docs.squared.ai/api-reference/syncs/manual_sync_cancel
+  - surface: Connector
+    write: POST /api/v1/connectors
+    reversal: DELETE /api/v1/connectors/{id}
+    reversal_kind: delete
+    window: null
+    restore: none
+    note: Deletion is permanent as published; no restore, undelete or trash operation exists.
+  - surface: Model
+    write: POST /api/v1/models
+    reversal: DELETE /api/v1/models/{id}
+    reversal_kind: delete
+    window: null
+    restore: none
+  - surface: Sync
+    write: POST /api/v1/syncs
+    reversal: DELETE /api/v1/syncs/{id}
+    reversal_kind: delete
+    window: null
+    restore: none
+  - surface: Catalog
+    write: POST /api/v1/catalogs, PUT /api/v1/catalogs/{id}
+    reversal: null
+    reversal_kind: none
+    note: >-
+      No delete or revert operation for catalogs is published. A catalog can be overwritten with
+      PUT but not restored to a prior revision; catalog_hash is returned but there is no operation
+      that takes a hash to roll back to.
+  data_movement_caveat: >-
+    The consequential act on this platform is a SYNC - it writes customer data into a live
+    destination (Salesforce, HubSpot, Braze, a warehouse). Nothing in the published contract
+    offers a reversal of rows already delivered to a destination. Cancelling or deleting the sync
+    stops future movement; it does not undo movement that already happened, and the docs do not
+    claim it does.
+dry_run_mode:
+  supported: partial
+  mechanism: >-
+    Two rehearsal surfaces exist. POST /api/v1/connector_definitions/check_connection validates a
+    connector configuration without creating anything, and POST /enterprise/api/v1/syncs/{sync_id}/test
+    (testSync) triggers a test of a configured sync. POST /api/v1/connectors/{id}/query_source
+    also lets a caller run a query against a source read-only before wiring it into a sync.
+  note: >-
+    testSync is on the /enterprise/ path prefix, so this rehearsal path is not part of the
+    open-source surface.
+pagination:
+  styles:
+  - style: page-number
+    params:
+    - page
+    - page_size
+    default_page_size: 100
+    max_page_size: 100
+    source: https://docs.squared.ai/api-reference/introduction
+    example: https://api.squared.ai/api/v1/models?page=2&page_size=50
+  - style: json-api-bracketed
+    params:
+    - page[number]
+    - page[size]
+    source: openapi/ai-squared-openapi.yml
+    operations:
+    - GET /api/v1/syncs/{sync_id}/sync_runs
+    - GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records
+  inconsistency: >-
+    The two styles are not reconciled anywhere. The prose documents page/page_size; the sync-run
+    and sync-record operations declare page[number]/page[size] in the contract. A caller cannot
+    tell from the docs which surface takes which.
+  response_fields:
+    envelope: 'data'
+    links:
+    - self
+    - first
+    - prev
+    - next
+    - last
+    note: >-
+      Collection responses return {data: [...], links: {...}} with both data and links required.
+      No total-count or page-count field is published, so a caller cannot size a result set in
+      advance.
+field_expansion:
+  supported: false
+  note: No expand, include, fields[] or sparse-fieldset parameter is declared on any operation.
+metadata:
+  supported: false
+  note: >-
+    No customer-writable metadata bag is published on any resource. Resources carry a fixed
+    attribute set.
+request_id_tracing:
+  supported: false
+  note: >-
+    No X-Request-Id, Request-Id, traceparent or correlation header is documented or declared. The
+    August 2026 release notes record that AI Squared's own request logs now capture Origin and
+    Referer - that is server-side logging, not a correlation id returned to the caller.
+versioning:
+  style: uri-path
+  current: v1
+  base_url: https://api.squared.ai/api/v1/
+  spec_version: 1.0.0
+  policy_published: false
+  note: >-
+    Versioning is by URI path segment. No version-negotiation header, no dated versions, and no
+    published policy on how a v2 would be introduced. The /enterprise/api/v1/ prefix carries the
+    enterprise-only operations under the same v1 line.
+error_envelope:
+  documented: false
+  format: http-status
+  note: >-
+    No error body schema is published on any operation. See errors/ai-squared-problem-types.yml -
+    24 of 29 operations declare no 4xx/5xx response at all.
+  detail: errors/ai-squared-problem-types.yml
+rate_limit_signalling:
+  limits_published: true
+  headers_published: false
+  status_on_exhaustion: 429
+  note: >-
+    100 requests/minute is stated in prose. No RateLimit-* or Retry-After header is documented,
+    and no operation declares a 429 response, so an agent gets no advance warning - only the
+    rejection.
+  detail: rate-limits/ai-squared-rate-limits.yml
+content_types:
+  request: application/json
+  response: application/json
+  note: No vendor media type, no content negotiation, no alternative representations.
+lifecycle_link: lifecycle/ai-squared-lifecycle.yml

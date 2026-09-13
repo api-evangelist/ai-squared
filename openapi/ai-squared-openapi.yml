@@ -1,0 +1,2016 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+  description: The AI Squared API. REST, JSON request/response bodies, JWT bearer authentication. Base
+    URL https://api.squared.ai/api/v1/. Assembled verbatim from the per-operation OpenAPI documents AI
+    Squared publishes on its own documentation host (docs.squared.ai/api-reference/*).
+servers:
+- url: https://api.squared.ai
+security: []
+tags:
+- name: Catalogs
+- name: Connector Definitions
+- name: Connectors
+- name: Models
+- name: SyncRecords
+- name: SyncRun
+- name: SyncRuns
+- name: Syncs
+paths:
+  /api/v1/connector_definitions/check_connection:
+    post:
+      tags:
+      - Connector Definitions
+      summary: Checks the connection for a specified connector definition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - source
+                  - destination
+                name:
+                  type: string
+                connection_spec:
+                  type: object
+                  description: Generic connection specification structure. Specifics depend on the connector
+                    type.
+                  additionalProperties: true
+      responses:
+        '200':
+          description: Connection check successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    enum:
+                    - success
+                    - failure
+                  details:
+                    type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+  /api/v1/connector_definitions/{connector_name}:
+    get:
+      tags:
+      - Connector Definitions
+      summary: Retrieve specific connector definition based on its name
+      parameters:
+      - name: connector_name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Name of the connector
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - destination
+        description: Type of the connector (source or destination)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  connector_type:
+                    type: string
+                  connector_subtype:
+                    type: string
+                  documentation_url:
+                    type: string
+                  github_issue_label:
+                    type: string
+                  icon:
+                    type: string
+                  license:
+                    type: string
+                  release_stage:
+                    type: string
+                  support_level:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                  connector_spec:
+                    type: object
+                    properties:
+                      documentation_url:
+                        type: string
+                      connection_specification:
+                        type: object
+                        additionalProperties: true
+                      supports_normalization:
+                        type: boolean
+                      supports_dbt:
+                        type: boolean
+                      stream_type:
+                        type: string
+                additionalProperties: true
+      security:
+      - bearerAuth: []
+  /api/v1/connector_definitions:
+    get:
+      tags:
+      - Connector Definitions
+      summary: Retrieve connector definitions based on type
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - destination
+        description: Type of the connector (source or destination)
+      - name: category
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - data
+          - ai_ml
+        description: Category of the connector
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    connector_type:
+                      type: string
+                    connector_subtype:
+                      type: string
+                    documentation_url:
+                      type: string
+                    github_issue_label:
+                      type: string
+                    icon:
+                      type: string
+                    license:
+                      type: string
+                    release_stage:
+                      type: string
+                    support_level:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                    connector_spec:
+                      type: object
+                      properties:
+                        documentation_url:
+                          type: string
+                        connection_specification:
+                          type: object
+                          additionalProperties: true
+      security:
+      - bearerAuth: []
+  /api/v1/models:
+    post:
+      tags:
+      - Models
+      summary: Creates a model
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    query:
+                      type: string
+                    query_type:
+                      type: string
+                    configuration:
+                      type: object
+                    primary_key:
+                      type: string
+                    connector_id:
+                      type: integer
+                  required:
+                  - connector_id
+                  - name
+                  - query_type
+      responses:
+        '201':
+          description: Model created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          description:
+                            type: string
+                          query:
+                            type: string
+                          query_type:
+                            type: string
+                          configuration:
+                            type: object
+                          primary_key:
+                            type: string
+                          connector_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Models
+      summary: Lists all models
+      parameters:
+      - name: query_type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - data
+          - ai_ml
+          - raw_sql
+          - dbt soql
+          - table_selector
+        description: query type
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            description:
+                              type: string
+                            query:
+                              type: string
+                            query_type:
+                              type: string
+                            configuration:
+                              type: object
+                            primary_key:
+                              type: string
+                            connector_id:
+                              type: integer
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                      first:
+                        type: string
+                      prev:
+                        type: string
+                      next:
+                        type: string
+                      last:
+                        type: string
+      security:
+      - bearerAuth: []
+  /api/v1/catalogs:
+    post:
+      tags:
+      - Catalogs
+      summary: Create catalog
+      operationId: createCatalog
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connector_id:
+                  type: integer
+                  example: 6
+                catalog:
+                  type: object
+                  properties:
+                    json_schema:
+                      type: object
+                      example:
+                        key: value
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 123
+                  connector_id:
+                    type: integer
+                    example: 6
+                  workspace_id:
+                    type: integer
+                    example: 2
+                  catalog:
+                    type: object
+                    properties:
+                      json_schema:
+                        type: object
+                        example:
+                          key: value
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: '2023-08-20T15:28:00Z'
+                  updated_at:
+                    type: string
+                    format: date-time
+                    example: '2023-08-20T15:28:00Z'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      security:
+      - bearerAuth: []
+  /api/v1/connectors:
+    post:
+      tags:
+      - Connectors
+      summary: Creates a connector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connector:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    connector_type:
+                      type: string
+                      enum:
+                      - source
+                      - destination
+                    connector_name:
+                      type: string
+                    configuration:
+                      type: object
+                      description: Configuration details for the connector. Structure depends on the connector
+                        definition.
+                      additionalProperties: true
+                  required:
+                  - name
+                  - connector_type
+                  - connector_name
+                  - configuration
+      responses:
+        '201':
+          description: Connector created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          connector_type:
+                            type: string
+                          workspace_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          configuration:
+                            type: object
+                            description: Specific configuration of the created connector.
+                            additionalProperties: true
+                          connector_name:
+                            type: string
+                          icon:
+                            type: string
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Connectors
+      summary: Lists all connectors
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - destination
+        description: Type of the connector
+      - name: category
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - data
+          - ai_ml
+        description: Category of the connector
+      responses:
+        '200':
+          description: A list of connectors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            connector_type:
+                              type: string
+                            workspace_id:
+                              type: integer
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            configuration:
+                              type: object
+                              description: Generic configuration for the connector. Structure varies based
+                                on the connector_type.
+                              additionalProperties: true
+                            connector_name:
+                              type: string
+                            icon:
+                              type: string
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                      first:
+                        type: string
+                      prev:
+                        type: string
+                      next:
+                        type: string
+                      last:
+                        type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+  /api/v1/syncs:
+    post:
+      tags:
+      - Syncs
+      summary: Create a new sync operation
+      operationId: createSync
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sync:
+                  type: object
+                  properties:
+                    source_id:
+                      type: integer
+                    destination_id:
+                      type: integer
+                    model_id:
+                      type: integer
+                    schedule_type:
+                      type: string
+                      enum:
+                      - automated
+                    configuration:
+                      type: object
+                      additionalProperties: true
+                    stream_name:
+                      type: string
+                    sync_mode:
+                      type: string
+                      enum:
+                      - full_refresh
+                    sync_interval:
+                      type: integer
+                    sync_interval_unit:
+                      type: string
+                      enum:
+                      - minutes
+                    cron_expression:
+                      type: string
+                    cursor_field:
+                      type: string
+                  required:
+                  - source_id
+                  - destination_id
+                  - model_id
+                  - schedule_type
+                  - configuration
+                  - stream_name
+                  - sync_mode
+                  - sync_interval
+                  - sync_interval_unit
+      responses:
+        '200':
+          description: Sync operation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                    - syncs
+                  attributes:
+                    type: object
+                    properties:
+                      source_id:
+                        type: integer
+                      destination_id:
+                        type: integer
+                      model_id:
+                        type: integer
+                      configuration:
+                        type: object
+                        additionalProperties: true
+                      schedule_type:
+                        type: string
+                        enum:
+                        - automated
+                      sync_mode:
+                        type: string
+                        enum:
+                        - full_refresh
+                      sync_interval:
+                        type: integer
+                      sync_interval_unit:
+                        type: string
+                        enum:
+                        - minutes
+                      cron_expression:
+                        type: string
+                      cursor_field:
+                        type: string
+                      stream_name:
+                        type: string
+                      status:
+                        type: string
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Syncs
+      summary: List all sync operations
+      operationId: listSyncs
+      parameters:
+      - name: page[number]
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Page number for pagination
+      - name: page[size]
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Number of items per page for pagination
+      responses:
+        '200':
+          description: A list of sync operations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                          - syncs
+                        attributes:
+                          type: object
+                          properties:
+                            source_id:
+                              type: integer
+                            destination_id:
+                              type: integer
+                            model_id:
+                              type: integer
+                            configuration:
+                              type: object
+                              additionalProperties: true
+                            schedule_type:
+                              type: string
+                              enum:
+                              - automated
+                            sync_mode:
+                              type: string
+                              enum:
+                              - full_refresh
+                            sync_interval:
+                              type: integer
+                            sync_interval_unit:
+                              type: string
+                              enum:
+                              - minutes
+                            cron_expression:
+                              type: string
+                            cursor_field:
+                              type: string
+                            stream_name:
+                              type: string
+                            status:
+                              type: string
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        format: uri
+                      prev:
+                        type: string
+                        format: uri
+                      next:
+                        type: string
+                        format: uri
+                      last:
+                        type: string
+                        format: uri
+                required:
+                - data
+                - links
+      security:
+      - bearerAuth: []
+  /api/v1/models/{id}:
+    delete:
+      tags:
+      - Models
+      summary: Deletes a model
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: Model deleted
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Models
+      summary: Retrieves a model
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          description:
+                            type: string
+                          query:
+                            type: string
+                          query_type:
+                            type: string
+                          configuration:
+                            type: object
+                          primary_key:
+                            type: string
+                          connector_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Models
+      summary: Updates a model
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    query:
+                      type: string
+                    query_type:
+                      type: string
+                    configuration:
+                      type: object
+                    primary_key:
+                      type: string
+                    connector_id:
+                      type: integer
+                  required:
+                  - connector_id
+                  - name
+                  - query_type
+      responses:
+        '200':
+          description: Model updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          description:
+                            type: string
+                          query:
+                            type: string
+                          query_type:
+                            type: string
+                          configuration:
+                            type: object
+                          primary_key:
+                            type: string
+                          connector_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+      security:
+      - bearerAuth: []
+  /api/v1/connectors/{id}:
+    delete:
+      tags:
+      - Connectors
+      summary: Deletes a specific connector by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      responses:
+        '204':
+          description: No content, indicating successful deletion
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Connectors
+      summary: Retrieves a specific connector by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      responses:
+        '200':
+          description: A single connector object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          connector_type:
+                            type: string
+                          workspace_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          configuration:
+                            type: object
+                            description: Generic configuration for the connector. Structure varies based
+                              on the connector_type.
+                            additionalProperties: true
+                          connector_name:
+                            type: string
+                          icon:
+                            type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Connectors
+      summary: Updates a specific connector by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connector:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    connector_type:
+                      type: string
+                      enum:
+                      - source
+                      - destination
+                    configuration:
+                      type: object
+                      description: Generic configuration structure. Specifics depend on the connector
+                        type.
+                      additionalProperties: true
+                    connector_name:
+                      type: string
+                  required:
+                  - name
+                  - connector_type
+                  - configuration
+                  - connector_name
+      responses:
+        '200':
+          description: Connector updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          connector_type:
+                            type: string
+                          workspace_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          configuration:
+                            type: object
+                            description: Specific configuration of the updated connector.
+                            additionalProperties: true
+                          connector_name:
+                            type: string
+                          icon:
+                            type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+  /api/v1/syncs/{id}:
+    delete:
+      tags:
+      - Syncs
+      summary: Delete a specific sync operation
+      operationId: deleteSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the sync operation to delete
+      responses:
+        '204':
+          description: No content, indicating the sync operation was successfully deleted
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Syncs
+      summary: Show details of a specific sync operation
+      operationId: showSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sync details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                    - syncs
+                  attributes:
+                    type: object
+                    properties:
+                      source_id:
+                        type: integer
+                      destination_id:
+                        type: integer
+                      model_id:
+                        type: integer
+                      configuration:
+                        type: object
+                        additionalProperties: true
+                      schedule_type:
+                        type: string
+                        enum:
+                        - automated
+                      sync_mode:
+                        type: string
+                        enum:
+                        - full_refresh
+                      sync_interval:
+                        type: integer
+                      sync_interval_unit:
+                        type: string
+                        enum:
+                        - minutes
+                      cron_expression:
+                        type: string
+                      cursor_field:
+                        type: string
+                      stream_name:
+                        type: string
+                      status:
+                        type: string
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Syncs
+      summary: Update a specific sync operation
+      operationId: updateSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sync:
+                  type: object
+                  properties:
+                    source_id:
+                      type: integer
+                    destination_id:
+                      type: integer
+                    model_id:
+                      type: integer
+                    schedule_type:
+                      type: string
+                    configuration:
+                      type: object
+                      additionalProperties: true
+                    stream_name:
+                      type: string
+                    sync_mode:
+                      type: string
+                    sync_interval:
+                      type: integer
+                    sync_interval_unit:
+                      type: string
+                    cron_expression:
+                      type: string
+      responses:
+        '200':
+          description: Sync operation updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - syncs
+                      attributes:
+                        type: object
+                        properties:
+                          source_id:
+                            type: integer
+                          destination_id:
+                            type: integer
+                          model_id:
+                            type: integer
+                          configuration:
+                            type: object
+                            additionalProperties: true
+                          schedule_type:
+                            type: string
+                            enum:
+                            - automated
+                          sync_mode:
+                            type: string
+                            enum:
+                            - full_refresh
+                          sync_interval:
+                            type: integer
+                          sync_interval_unit:
+                            type: string
+                            enum:
+                            - minutes
+                          cron_expression:
+                            type: string
+                          cursor_field:
+                            type: string
+                          stream_name:
+                            type: string
+                          status:
+                            type: string
+      security:
+      - bearerAuth: []
+  /api/v1/connectors/{id}/discover:
+    get:
+      tags:
+      - Connectors
+      summary: Discovers catalog information for a specified connector
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      - name: refresh
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Set to true to force refresh the catalog
+      responses:
+        '200':
+          description: Catalog information for the connector
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          connector_id:
+                            type: integer
+                          workspace_id:
+                            type: integer
+                          catalog:
+                            type: object
+                            properties:
+                              streams:
+                                type: array
+                                description: Array of stream objects, varying based on connector ID.
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    action:
+                                      type: string
+                                    json_schema:
+                                      type: object
+                                      additionalProperties: true
+                                    url:
+                                      type: string
+                                    request_method:
+                                      type: string
+                          catalog_hash:
+                            type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+  /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records:
+    get:
+      tags:
+      - SyncRecords
+      summary: List sync records for a specific sync run
+      description: Retrieves a list of sync records for a specific sync run, optionally filtered by status.
+      operationId: getSyncRecords
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: The ID of the sync to list records for.
+      - name: sync_run_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: The ID of the sync run to list records for.
+      - name: status
+        in: query
+        schema:
+          type: string
+        description: Optional status to filter the sync records by.
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: Page number for pagination.
+      responses:
+        '200':
+          description: A JSON array of sync records
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                          example: sync_records
+                        attributes:
+                          type: object
+                          properties:
+                            sync_id:
+                              type: integer
+                            sync_run_id:
+                              type: integer
+                            record:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                state:
+                                  type: string
+                                last_name:
+                                  type: string
+                                first_name:
+                                  type: string
+                                phone_number:
+                                  type: integer
+                                email_address:
+                                  type: string
+                            status:
+                              type: string
+                            action:
+                              type: string
+                            error:
+                              type: string
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        format: uri
+                      prev:
+                        type: string
+                        format: uri
+                        nullable: true
+                      next:
+                        type: string
+                        format: uri
+                        nullable: true
+                      last:
+                        type: string
+                        format: uri
+        '404':
+          description: SyncRun not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: SyncRun not found
+                  status:
+                    type: string
+                    example: not_found
+      security:
+      - bearerAuth: []
+  /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}:
+    get:
+      tags:
+      - SyncRun
+      summary: Get sync run using sync_run_id for a specific sync
+      description: Retrieves a sync run using sync_run_id for a specific sync.
+      operationId: getSyncRun
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: The ID of the sync.
+      - name: sync_run_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: The ID of the sync_run.
+      responses:
+        '200':
+          description: A JSON object representing the sync run
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          sync_id:
+                            type: integer
+                          status:
+                            type: string
+                          started_at:
+                            type: string
+                            format: date-time
+                          finished_at:
+                            type: string
+                            format: date-time
+                          duration:
+                            type: number
+                            format: float
+                          total_query_rows:
+                            type: integer
+                          total_rows:
+                            type: integer
+                          successful_rows:
+                            type: integer
+                          failed_rows:
+                            type: integer
+                          error:
+                            type: string
+                            nullable: true
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+        '404':
+          description: Sync not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync Run not found
+                  status:
+                    type: string
+                    example: not_found
+      security:
+      - bearerAuth: []
+  /api/v1/syncs/{sync_id}/sync_runs:
+    get:
+      tags:
+      - SyncRuns
+      summary: List sync runs for a specific sync
+      description: Retrieves a list of sync runs for a specific sync, optionally filtered by status.
+      operationId: getSyncRuns
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: The ID of the sync to list runs for.
+      - name: status
+        in: query
+        schema:
+          type: string
+        description: Optional status to filter the sync runs by.
+      - name: page
+        in: query
+        schema:
+          type: integer
+        description: Page number for pagination.
+      responses:
+        '200':
+          description: A JSON array of sync runs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            sync_id:
+                              type: integer
+                            status:
+                              type: string
+                            started_at:
+                              type: string
+                              format: date-time
+                            finished_at:
+                              type: string
+                              format: date-time
+                            duration:
+                              type: number
+                              format: float
+                            total_query_rows:
+                              type: integer
+                            skipped_rows:
+                              type: integer
+                            total_rows:
+                              type: integer
+                            successful_rows:
+                              type: integer
+                            failed_rows:
+                              type: integer
+                            error:
+                              type: string
+                              nullable: true
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        format: uri
+                      prev:
+                        type: string
+                        format: uri
+                        nullable: true
+                      next:
+                        type: string
+                        format: uri
+                        nullable: true
+                      last:
+                        type: string
+                        format: uri
+        '404':
+          description: Sync not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync not found
+                  status:
+                    type: string
+                    example: not_found
+      security:
+      - bearerAuth: []
+  /api/v1/schedule_syncs/{sync_id}:
+    delete:
+      tags:
+      - Syncs
+      summary: Cancel a Manual Sync
+      description: Cancel a Manual Sync using the sync ID.
+      operationId: cancelSyncTrigger
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        description: The ID of the sync to be canceled
+        schema:
+          type: integer
+          example: 72
+      responses:
+        '200':
+          description: Sync cancelled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync cancelled successfully
+      security:
+      - bearerAuth: []
+  /api/v1/schedule_syncs:
+    post:
+      tags:
+      - Syncs
+      summary: Trigger a manual Sync
+      description: Trigger a manual Sync by providing the sync ID.
+      operationId: manualSyncTrigger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_sync:
+                  type: object
+                  properties:
+                    sync_id:
+                      type: integer
+                      description: ID of the sync to be scheduled
+                      example: 10
+                  required:
+                  - sync_id
+      responses:
+        '200':
+          description: Sync scheduled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync scheduled successfully
+      security:
+      - bearerAuth: []
+  /api/v1/connectors/{id}/query_source:
+    post:
+      tags:
+      - Connectors
+      summary: Query your source data
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the connector to query
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: SQL query to be executed
+      responses:
+        '200':
+          description: An array of generic JSON objects representing the preview data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+      security:
+      - bearerAuth: []
+  /api/v1/syncs/configurations:
+    get:
+      tags:
+      - Syncs
+      summary: Get report data based on given type
+      operationId: getConfigurations
+      responses:
+        '200':
+          description: Successfully retrieved report data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    description: Data object containing configuration details.
+                    properties:
+                      configurations:
+                        type: object
+                        description: Configuration details.
+                        properties:
+                          catalog_mapping_types:
+                            type: object
+                            description: Mapping types for catalog data.
+                            properties:
+                              standard:
+                                type: string
+                                description: Details for standard mapping type (currently empty).
+                              static:
+                                type: object
+                                description: Details for static mapping type.
+                                properties:
+                                  string:
+                                    type: object
+                                    description: Details for string type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for string field.
+                                        enum:
+                                        - string
+                                      description:
+                                        type: string
+                                        description: Description of the string field.
+                                  number:
+                                    type: object
+                                    description: Details for number type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for number field.
+                                        enum:
+                                        - float
+                                      description:
+                                        type: string
+                                        description: Description of the number field.
+                                  boolean:
+                                    type: object
+                                    description: Details for boolean type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for boolean field.
+                                        enum:
+                                        - boolean
+                                      description:
+                                        type: string
+                                        description: Description of the boolean field.
+                                  'null':
+                                    type: object
+                                    description: Details for null type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for null field.
+                                        enum:
+                                        - null
+                                      description:
+                                        type: string
+                                        description: Description of the null field.
+                              template:
+                                type: object
+                                description: Details for template mapping type.
+                                properties:
+                                  variable:
+                                    type: object
+                                    description: Details for variables within template mapping.
+                                    properties:
+                                      current_timestamp:
+                                        type: object
+                                        description: Details for current_timestamp variable.
+                                        properties:
+                                          type:
+                                            type: string
+                                            description: Data type for current_timestamp variable.
+                                            enum:
+                                            - datetime
+                                          description:
+                                            type: string
+                                            description: Description of the current_timestamp variable.
+                                          value:
+                                            type: string
+                                            description: Expression to generate current timestamp.
+                                  filter:
+                                    type: object
+                                    description: Details for filters within template mapping.
+                                    properties:
+                                      cast:
+                                        type: object
+                                        description: Details for cast filter.
+                                        properties:
+                                          description:
+                                            type: string
+                                            description: Description of the cast filter.
+                                          value:
+                                            type: string
+                                            description: Expression to cast value to specified type.
+                                      regex_replace:
+                                        type: object
+                                        description: Details for regex_replace filter.
+                                        properties:
+                                          description:
+                                            type: string
+                                            description: Description of the regex_replace filter.
+                                          value:
+                                            type: string
+                                            description: Expression to perform regex replace operation.
+      security:
+      - bearerAuth: []
+  /enterprise/api/v1/syncs/{sync_id}/test:
+    post:
+      tags:
+      - Syncs
+      summary: Trigger a Sync Test
+      description: Triggers a test for the specified sync using the sync ID.
+      operationId: testSync
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        description: The ID of the sync to be tested
+        schema:
+          type: integer
+          example: 72
+      responses:
+        '200':
+          description: Sync test triggered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync test triggered successfully
+      security:
+      - bearerAuth: []
+  /api/v1/catalogs/{id}:
+    put:
+      tags:
+      - Catalogs
+      summary: Update catalog
+      operationId: updateCatalog
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the catalog to update
+        schema:
+          type: integer
+          example: 34
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connector_id:
+                  type: integer
+                  example: 6
+                catalog:
+                  type: object
+                  properties:
+                    json_schema:
+                      type: object
+                      example:
+                        field: test_field
+      responses:
+        '200':
+          description: Catalog updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: '34'
+                      type:
+                        type: string
+                        example: catalogs
+                      attributes:
+                        type: object
+                        properties:
+                          connector_id:
+                            type: integer
+                            example: 6
+                          workspace_id:
+                            type: integer
+                            example: 2
+                          catalog:
+                            type: object
+                            properties:
+                              streams:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                      example: test_name
+                                    url:
+                                      type: string
+                                      example: test_url
+                                    json_schema:
+                                      type: object
+                                      example:
+                                        field: test field
+                                    batch_support:
+                                      type: boolean
+                                      example: false
+                                    batch_size:
+                                      type: integer
+                                      example: 0
+                                    request_method:
+                                      type: string
+                                      example: POST
+                              request_rate_concurrency:
+                                type: integer
+                                example: 10
+                              request_rate_limit:
+                                type: integer
+                                example: 600
+                              request_rate_limit_unit:
+                                type: string
+                                example: minute
+                          catalog_hash:
+                            type: string
+                            example: 0755b5f0d3432bc3b0064227d2b6178d402327b9
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Catalog not found
+        '500':
+          description: Internal Server Error
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-provenance:
+  generated: '2026-09-13'
+  method: searched
+  source: https://docs.squared.ai/api-reference/ (per-operation OpenAPI documents published by AI Squared)
+  assembly: mechanical merge of 29 provider-published OpenAPI 3.0.1 documents; every path item, parameter,
+    requestBody, response and securityScheme is verbatim provider content. No operation, schema or example
+    was authored by API Evangelist.
+  ownership: info.title "AI Squared API" and servers[] https://api.squared.ai both name this provider;
+    the documentation host docs.squared.ai is AI Squared's own (squared.ai redirects to aisquared.ai).
+  note: AI Squared links a consolidated spec at /api-reference/openapi.yml from its llms.txt, but that
+    path returns 404 (checked 2026-09-13); the per-operation documents embedded in each reference page
+    are the reachable published form.
+  operation_sources:
+    POST /api/v1/connector_definitions/check_connection: https://docs.squared.ai/api-reference/connector_definitions/check_connection.md
+    GET /api/v1/connector_definitions/{connector_name}: https://docs.squared.ai/api-reference/connector_definitions/connector_definition.md
+    GET /api/v1/connector_definitions: https://docs.squared.ai/api-reference/connector_definitions/connector_definitions.md
+    POST /api/v1/models: https://docs.squared.ai/api-reference/models/create-model.md
+    POST /api/v1/catalogs: https://docs.squared.ai/api-reference/catalogs/create_catalog.md
+    POST /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/create_connector.md
+    POST /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/create_sync.md
+    DELETE /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/delete-model.md
+    DELETE /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/delete_connector.md
+    DELETE /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/delete_sync.md
+    GET /api/v1/connectors/{id}/discover: https://docs.squared.ai/api-reference/connectors/discover.md
+    GET /api/v1/models: https://docs.squared.ai/api-reference/models/get-all-models.md
+    GET /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/get-model.md
+    GET /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/get_connector.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records: https://docs.squared.ai/api-reference/sync_records/get_sync_records.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}: https://docs.squared.ai/api-reference/sync_runs/get_sync_run.md
+    GET /api/v1/syncs/{sync_id}/sync_runs: https://docs.squared.ai/api-reference/sync_runs/get_sync_runs.md
+    GET /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/get_syncs.md
+    GET /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/list_connectors.md
+    DELETE /api/v1/schedule_syncs/{sync_id}: https://docs.squared.ai/api-reference/syncs/manual_sync_cancel.md
+    POST /api/v1/schedule_syncs: https://docs.squared.ai/api-reference/syncs/manual_sync_trigger.md
+    POST /api/v1/connectors/{id}/query_source: https://docs.squared.ai/api-reference/connectors/query_source.md
+    GET /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/show_sync.md
+    GET /api/v1/syncs/configurations: https://docs.squared.ai/api-reference/syncs/sync_configuration.md
+    POST /enterprise/api/v1/syncs/{sync_id}/test: https://docs.squared.ai/api-reference/syncs/test_sync.md
+    PUT /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/update-model.md
+    PUT /api/v1/catalogs/{id}: https://docs.squared.ai/api-reference/catalogs/update_catalog.md
+    PUT /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/update_connector.md
+    PUT /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/update_sync.md

@@ -1,0 +1,98 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+servers:
+  - url: https://api.squared.ai
+security: []
+paths:
+  /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}:
+    get:
+      tags:
+        - SyncRun
+      summary: Get sync run using sync_run_id for a specific sync
+      description: Retrieves a sync run using sync_run_id for a specific sync.
+      operationId: getSyncRun
+      parameters:
+        - name: sync_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the sync.
+        - name: sync_run_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the sync_run.
+      responses:
+        '200':
+          description: A JSON object representing the sync run
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          sync_id:
+                            type: integer
+                          status:
+                            type: string
+                          started_at:
+                            type: string
+                            format: date-time
+                          finished_at:
+                            type: string
+                            format: date-time
+                          duration:
+                            type: number
+                            format: float
+                          total_query_rows:
+                            type: integer
+                          total_rows:
+                            type: integer
+                          successful_rows:
+                            type: integer
+                          failed_rows:
+                            type: integer
+                          error:
+                            type: string
+                            nullable: true
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+        '404':
+          description: Sync not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync Run not found
+                  status:
+                    type: string
+                    example: not_found
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

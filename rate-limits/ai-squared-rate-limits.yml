@@ -1,0 +1,52 @@
+generated: '2026-09-13'
+method: searched
+source: https://docs.squared.ai/api-reference/introduction
+docs: https://docs.squared.ai/api-reference/introduction
+limit_count: 2
+summary: >-
+  One platform-wide REST limit is published in the API reference, and one endpoint-class limit is
+  published in the September 2026 release notes. Neither is accompanied by response headers, so an
+  agent has no runtime signal - it can only observe the 429.
+rate_limits:
+- name: REST API default
+  scope: api-wide
+  window: 1 minute
+  limit: 100
+  unit: requests
+  burst: null
+  status_on_exhaustion: 429
+  source: https://docs.squared.ai/api-reference/introduction
+  quote: >-
+    "The AI Squared API is rate limited to 100 requests per minute. If you exceed this limit, you
+    will receive a 429 Too Many Requests response."
+  note: >-
+    The docs do not say whether the 100/minute is counted per API key, per user, per workspace or
+    per IP.
+- name: Agentic Coding Git session events
+  scope: per-ip
+  window: 1 minute
+  limit: 60
+  unit: requests
+  status_on_exhaustion: 429
+  source: https://docs.squared.ai/release-notes/2026/September-2026.md
+  quote: '"Requests are rate limited to 60 per minute per IP."'
+  note: >-
+    Applies to the Git session-events endpoint added in September 2026 for Agentic Coding
+    sessions. That endpoint is not in the published OpenAPI. The same release note records that
+    Git and webhook endpoints generally are now rate limited, without stating those numbers.
+response_headers:
+  published: false
+  headers: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header is documented anywhere in the docs, and no
+    operation in the OpenAPI declares a 429 response or any rate-limit header. The limits above
+    are prose-only. Verified against the published contract on 2026-09-13; not verified against a
+    live response, because every operation requires a JWT and this pass is anonymous.
+related:
+  connector_level: >-
+    Separately from the platform API limit, a destination CATALOG carries its own outbound
+    throttle - catalog.request_rate_limit, catalog.request_rate_limit_unit and
+    catalog.request_rate_concurrency (example values 600 per minute, concurrency 10) in the
+    POST/PUT /api/v1/catalogs request body. That is AI Squared rate-limiting itself when it writes
+    to a customer's destination, not a limit on callers of this API.
+  source: openapi/ai-squared-openapi.yml

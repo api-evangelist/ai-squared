@@ -1,0 +1,83 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+servers:
+  - url: https://api.squared.ai
+security: []
+paths:
+  /api/v1/connector_definitions/{connector_name}:
+    get:
+      tags:
+        - Connector Definitions
+      summary: Retrieve specific connector definition based on its name
+      parameters:
+        - name: connector_name
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the connector
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - source
+              - destination
+          description: Type of the connector (source or destination)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  connector_type:
+                    type: string
+                  connector_subtype:
+                    type: string
+                  documentation_url:
+                    type: string
+                  github_issue_label:
+                    type: string
+                  icon:
+                    type: string
+                  license:
+                    type: string
+                  release_stage:
+                    type: string
+                  support_level:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                  connector_spec:
+                    type: object
+                    properties:
+                      documentation_url:
+                        type: string
+                      connection_specification:
+                        type: object
+                        additionalProperties: true
+                      supports_normalization:
+                        type: boolean
+                      supports_dbt:
+                        type: boolean
+                      stream_type:
+                        type: string
+                additionalProperties: true
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

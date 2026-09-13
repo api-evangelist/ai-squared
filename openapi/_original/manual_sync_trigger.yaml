@@ -1,0 +1,51 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+servers:
+  - url: https://api.squared.ai
+security: []
+paths:
+  /api/v1/schedule_syncs:
+    post:
+      tags:
+        - Syncs
+      summary: Trigger a manual Sync
+      description: Trigger a manual Sync by providing the sync ID.
+      operationId: manualSyncTrigger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_sync:
+                  type: object
+                  properties:
+                    sync_id:
+                      type: integer
+                      description: ID of the sync to be scheduled
+                      example: 10
+                  required:
+                    - sync_id
+      responses:
+        '200':
+          description: Sync scheduled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync scheduled successfully
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

@@ -1,0 +1,84 @@
+generated: '2026-09-13'
+method: derived
+source: openapi/ai-squared-openapi.yml + https://docs.squared.ai/api-reference/introduction
+format: http-status
+format_note: >-
+  NOT RFC 9457. No operation in the published contract declares application/problem+json, and no
+  error response in the spec carries a schema at all - the 4xx/5xx entries are bare
+  status-plus-description. The documentation states only that "codes in the 4xx range indicate an
+  error that failed given the information provided, and codes in the 5xx range indicate an error
+  with AI Squared's servers". There is no published error-code registry, no error envelope
+  definition and no machine-readable error type identifiers.
+envelope:
+  documented: false
+  note: >-
+    Success bodies are consistently wrapped as {data: ...} (and {data: [...], links: {...}} for
+    collections), but no corresponding error envelope is published. An agent cannot know, before
+    calling, what shape an AI Squared error body has.
+coverage:
+  operations_total: 29
+  operations_declaring_any_4xx_or_5xx: 5
+  operations_with_no_error_responses: 24
+  percent_with_error_responses: 17.2
+  note: >-
+    24 of the 29 published operations declare only their success response. That is the dominant
+    error-semantics gap for this provider, and it is a gap in the contract, not in this harvest.
+problem_types:
+- status: 400
+  title: Bad Request
+  source: openapi
+  operations:
+  - POST /api/v1/catalogs
+  - PUT /api/v1/catalogs/{id}
+  remediation: >-
+    The request body failed validation. Re-check the catalog payload against the request schema in
+    the spec - in particular catalog.streams[] entries and connector_id.
+- status: 401
+  title: Unauthorized
+  source: openapi
+  operations:
+  - POST /api/v1/catalogs
+  - PUT /api/v1/catalogs/{id}
+  remediation: >-
+    Missing, malformed or expired JWT. Send Authorization: Bearer <JWT>; regenerate the token from
+    the AI Squared dashboard if it has been rotated or compromised.
+  applies_more_broadly: >-
+    Every operation that declares security: [bearerAuth] can return 401, but only the two catalog
+    operations declare it in the contract.
+- status: 404
+  title: Catalog not found
+  source: openapi
+  operations:
+  - PUT /api/v1/catalogs/{id}
+  remediation: The catalog id does not exist in this workspace.
+- status: 404
+  title: Sync not found
+  source: openapi
+  operations:
+  - GET /api/v1/syncs/{sync_id}/sync_runs
+  - GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}
+  remediation: The sync_id does not exist in this workspace.
+- status: 404
+  title: SyncRun not found
+  source: openapi
+  operations:
+  - GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records
+  remediation: The sync_run_id does not exist under the given sync.
+- status: 429
+  title: Too Many Requests
+  source: docs
+  source_url: https://docs.squared.ai/api-reference/introduction
+  declared_in_spec: false
+  operations:
+  - '*'
+  remediation: >-
+    The API is rate limited to 100 requests per minute. Back off and retry. Documented in the API
+    reference introduction but declared on no operation in the contract, and no rate-limit
+    response headers are published.
+- status: 500
+  title: Internal Server Error
+  source: openapi
+  operations:
+  - POST /api/v1/catalogs
+  - PUT /api/v1/catalogs/{id}
+  remediation: Server-side failure. Retry with backoff; escalate to AI Squared support if persistent.

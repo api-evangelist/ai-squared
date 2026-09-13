@@ -1,0 +1,49 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+servers:
+  - url: https://api.squared.ai
+security: []
+paths:
+  /api/v1/connectors/{id}/query_source:
+    post:
+      tags:
+        - Connectors
+      summary: Query your source data
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the connector to query
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: SQL query to be executed
+      responses:
+        '200':
+          description: An array of generic JSON objects representing the preview data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

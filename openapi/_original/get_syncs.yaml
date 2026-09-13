@@ -1,0 +1,110 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+servers:
+  - url: https://api.squared.ai
+security: []
+paths:
+  /api/v1/syncs:
+    get:
+      tags:
+        - Syncs
+      summary: List all sync operations
+      operationId: listSyncs
+      parameters:
+        - name: page[number]
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Page number for pagination
+        - name: page[size]
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: Number of items per page for pagination
+      responses:
+        '200':
+          description: A list of sync operations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                            - syncs
+                        attributes:
+                          type: object
+                          properties:
+                            source_id:
+                              type: integer
+                            destination_id:
+                              type: integer
+                            model_id:
+                              type: integer
+                            configuration:
+                              type: object
+                              additionalProperties: true
+                            schedule_type:
+                              type: string
+                              enum:
+                                - automated
+                            sync_mode:
+                              type: string
+                              enum:
+                                - full_refresh
+                            sync_interval:
+                              type: integer
+                            sync_interval_unit:
+                              type: string
+                              enum:
+                                - minutes
+                            cron_expression:
+                              type: string
+                            cursor_field:
+                              type: string
+                            stream_name:
+                              type: string
+                            status:
+                              type: string
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        format: uri
+                      prev:
+                        type: string
+                        format: uri
+                      next:
+                        type: string
+                        format: uri
+                      last:
+                        type: string
+                        format: uri
+                required:
+                  - data
+                  - links
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

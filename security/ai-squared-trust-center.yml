@@ -1,0 +1,82 @@
+generated: '2026-09-13'
+method: searched
+source: >-
+  https://docs.squared.ai/deployment-and-security/security-and-compliance/overview and
+  https://aisquared.ai/security-compliance-teams/
+trust_center:
+  dedicated_portal: false
+  probed:
+  - url: https://trust.squared.ai/
+    result: DNS does not resolve
+  - url: https://trust.aisquared.ai/
+    result: DNS does not resolve
+  - url: https://aisquared.ai/trust/
+    status: 404
+  checked: '2026-09-13'
+  note: >-
+    No Vanta/Drata/SafeBase-style trust portal, and no downloadable report request form. The
+    compliance posture is published as documentation prose and website logos only.
+pages:
+- url: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+  title: SOC 2 Type II
+  status: 200
+- url: https://aisquared.ai/security-compliance-teams/
+  title: Security & Compliance Teams
+  status: 200
+- url: https://aisquared.ai/data-processing-agreement/
+  title: Data Processing Agreement
+  status: 200
+- url: https://aisquared.ai/privacy-policy/
+  title: Privacy Policy
+  status: 200
+certifications:
+- name: SOC 2 Type II
+  claimed: true
+  status: certified
+  evidence: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+  quote: >-
+    "We are SOC 2 Type II certified, demonstrating that we meet stringent standards for
+    information security."
+  report_available: not stated
+  auditor: not stated
+  period: not stated
+- name: HIPAA
+  claimed: true
+  status: claimed-badge-only
+  evidence: https://aisquared.ai/security-compliance-teams/
+  note: >-
+    Displayed as a footer badge on the website. No BAA offer, scope statement or attestation
+    detail is published; recorded as a claim, not a verified certification.
+- name: CCPA
+  claimed: true
+  status: claimed-badge-only
+  evidence: https://aisquared.ai/security-compliance-teams/
+  note: Footer badge; a privacy-regime claim rather than a certification.
+not_claimed:
+- ISO 27001
+- ISO 27701
+- FedRAMP
+- PCI DSS
+- StateRAMP
+- CMMC
+- NIST 800-53
+- GDPR (no explicit claim found, though a DPA is published)
+controls_published:
+- control: Encryption at rest and in transit for all customers
+  source: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+- control: Encryption key management via Azure Key Vault
+  source: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+- control: Customer data isolation / segregation between tenants
+  source: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+- control: Hosted on Azure AKS with Azure Key Vault, Azure Defender and Azure Policy
+  source: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+- control: Role-Based Access Control restricting staff access to customer data
+  source: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
+- control: Role-based access, encryption and audit logs "built into every interaction"; complete
+    audit trails from data source to output
+  source: https://aisquared.ai/security-compliance-teams/
+deployment_isolation_options:
+- Managed Cloud (SaaS)
+- Customer-Managed Cloud (customer VPC)
+- Air-gapped on-premises
+- Federal on-premises / customer VPC (the Federal tier)

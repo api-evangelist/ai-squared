@@ -1,0 +1,77 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+servers:
+  - url: https://api.squared.ai
+security: []
+paths:
+  /api/v1/syncs/{id}:
+    get:
+      tags:
+        - Syncs
+      summary: Show details of a specific sync operation
+      operationId: showSync
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sync details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                      - syncs
+                  attributes:
+                    type: object
+                    properties:
+                      source_id:
+                        type: integer
+                      destination_id:
+                        type: integer
+                      model_id:
+                        type: integer
+                      configuration:
+                        type: object
+                        additionalProperties: true
+                      schedule_type:
+                        type: string
+                        enum:
+                          - automated
+                      sync_mode:
+                        type: string
+                        enum:
+                          - full_refresh
+                      sync_interval:
+                        type: integer
+                      sync_interval_unit:
+                        type: string
+                        enum:
+                          - minutes
+                      cron_expression:
+                        type: string
+                      cursor_field:
+                        type: string
+                      stream_name:
+                        type: string
+                      status:
+                        type: string
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

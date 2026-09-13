@@ -1,0 +1,115 @@
+openapi: 3.0.1
+info:
+  title: AI Squared API
+  version: 1.0.0
+servers:
+  - url: https://api.squared.ai
+security: []
+paths:
+  /api/v1/syncs/{id}:
+    put:
+      tags:
+        - Syncs
+      summary: Update a specific sync operation
+      operationId: updateSync
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sync:
+                  type: object
+                  properties:
+                    source_id:
+                      type: integer
+                    destination_id:
+                      type: integer
+                    model_id:
+                      type: integer
+                    schedule_type:
+                      type: string
+                    configuration:
+                      type: object
+                      additionalProperties: true
+                    stream_name:
+                      type: string
+                    sync_mode:
+                      type: string
+                    sync_interval:
+                      type: integer
+                    sync_interval_unit:
+                      type: string
+                    cron_expression:
+                      type: string
+      responses:
+        '200':
+          description: Sync operation updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                          - syncs
+                      attributes:
+                        type: object
+                        properties:
+                          source_id:
+                            type: integer
+                          destination_id:
+                            type: integer
+                          model_id:
+                            type: integer
+                          configuration:
+                            type: object
+                            additionalProperties: true
+                          schedule_type:
+                            type: string
+                            enum:
+                              - automated
+                          sync_mode:
+                            type: string
+                            enum:
+                              - full_refresh
+                          sync_interval:
+                            type: integer
+                          sync_interval_unit:
+                            type: string
+                            enum:
+                              - minutes
+                          cron_expression:
+                            type: string
+                          cursor_field:
+                            type: string
+                          stream_name:
+                            type: string
+                          status:
+                            type: string
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+

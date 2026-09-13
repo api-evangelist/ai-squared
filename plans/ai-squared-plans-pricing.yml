@@ -1,0 +1,67 @@
+generated: '2026-09-13'
+method: searched
+source: https://aisquared.ai/pricing/
+docs: https://aisquared.ai/pricing/
+plan_count: 3
+pricing_model: quote-only
+currency: null
+billing_period: null
+summary: >-
+  AI Squared publishes three named packages but no price for any of them. Every tier resolves to
+  "contact for a custom quote". The pricing page states the quote may reflect deployment type,
+  business-user access, platform usage, storage, connectors, implementation needs and selected
+  add-ons - so there is no published unit price, no included quota and no overage rate anywhere on
+  the public surface.
+plans:
+- name: Enterprise
+  price: null
+  price_published: false
+  currency: null
+  billing_period: null
+  deployment: SaaS or on-premises
+  included:
+    development_users: unlimited
+    business_users: seats per agreement
+    support: standard support
+  overage: null
+  add_ons:
+  - Custom solution modules
+- name: Federal
+  price: null
+  price_published: false
+  currency: null
+  billing_period: null
+  deployment: On-premises or customer VPC
+  included:
+    user_access: set per program needs
+    support: standard support
+    controls: data and model controls configured per deployment environment
+  overage: null
+  add_ons:
+  - Dedicated Forward Deployed Engineer
+  - Dedicated Project Manager
+- name: Sparx
+  price: null
+  price_published: false
+  currency: null
+  billing_period: null
+  deployment: SaaS
+  included:
+    users: a set, pre-defined number
+    source_connectors: selected connectors included
+    storage: shared storage pool
+    features:
+    - Chat with data using RAG
+  overage: null
+  add_ons:
+  - Custom use cases
+free_tier:
+  paid_plan_free_tier: false
+  note: >-
+    There is no free or self-serve tier on the commercial platform. The open-source core
+    (Multiwoven, AGPL-3.0) is free to self-host and is the only zero-cost path onto the API
+    surface, but it is a different product from the hosted tiers above.
+  source: https://github.com/Multiwoven/multiwoven
+note: >-
+  Recorded as quote-only rather than omitted: the absence of a public price is itself the
+  measurement. An agent or a buyer cannot size an AI Squared deployment without talking to sales.

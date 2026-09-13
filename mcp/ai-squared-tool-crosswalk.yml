@@ -1,0 +1,123 @@
+generated: '2026-09-13'
+method: derived
+source: mcp/ai-squared-mcp-tools.json + openapi/ai-squared-openapi.yml
+summary: >-
+  AI Squared publishes both a live MCP server and a REST OpenAPI, and they do not overlap at all.
+  The MCP server is a documentation server (search, read-only docs filesystem, docs feedback); the
+  REST API is the platform control plane (connectors, models, catalogs, syncs, sync runs, sync
+  records). Every MCP tool is mcp_only and every one of the 29 REST operations is rest_only. This
+  is the finding, not a gap in the mapping: an agent that speaks only MCP to AI Squared can read
+  the manual but cannot operate the platform.
+surfaces:
+  openapi:
+    file: openapi/ai-squared-openapi.yml
+    base_url: https://api.squared.ai/api/v1/
+    operations: 29
+    paths: 20
+    gated: true
+    gating: JWT bearer token issued from the AI Squared dashboard
+  mcp:
+    url: https://docs.squared.ai/mcp
+    tools: 3
+    gated: false
+  graphql:
+    present: false
+crosswalk: []
+mcp_only:
+- tool: search_ai_squared
+  reason: >-
+    Documentation search over the docs corpus. No REST operation exposes documentation search;
+    this surface exists only in MCP.
+- tool: query_docs_filesystem_ai_squared
+  reason: >-
+    Read-only virtual filesystem over documentation pages and API-reference specs. No REST
+    equivalent.
+- tool: submit_feedback
+  reason: >-
+    Documentation feedback write, routed to the docs team. Not a platform resource; no REST
+    operation exists for it.
+rest_only:
+- operation: POST /api/v1/connector_definitions/check_connection
+  tag: Connector Definitions
+- operation: GET /api/v1/connector_definitions/{connector_name}
+  tag: Connector Definitions
+- operation: GET /api/v1/connector_definitions
+  tag: Connector Definitions
+- operation: POST /api/v1/connectors
+  tag: Connectors
+- operation: GET /api/v1/connectors
+  tag: Connectors
+- operation: GET /api/v1/connectors/{id}
+  tag: Connectors
+- operation: PUT /api/v1/connectors/{id}
+  tag: Connectors
+- operation: DELETE /api/v1/connectors/{id}
+  tag: Connectors
+- operation: GET /api/v1/connectors/{id}/discover
+  tag: Connectors
+- operation: POST /api/v1/connectors/{id}/query_source
+  tag: Connectors
+- operation: POST /api/v1/models
+  tag: Models
+- operation: GET /api/v1/models
+  tag: Models
+- operation: GET /api/v1/models/{id}
+  tag: Models
+- operation: PUT /api/v1/models/{id}
+  tag: Models
+- operation: DELETE /api/v1/models/{id}
+  tag: Models
+- operation: POST /api/v1/catalogs
+  operationId: createCatalog
+  tag: Catalogs
+- operation: PUT /api/v1/catalogs/{id}
+  operationId: updateCatalog
+  tag: Catalogs
+- operation: POST /api/v1/syncs
+  operationId: createSync
+  tag: Syncs
+- operation: GET /api/v1/syncs
+  operationId: listSyncs
+  tag: Syncs
+- operation: GET /api/v1/syncs/{id}
+  operationId: showSync
+  tag: Syncs
+- operation: PUT /api/v1/syncs/{id}
+  operationId: updateSync
+  tag: Syncs
+- operation: DELETE /api/v1/syncs/{id}
+  operationId: deleteSync
+  tag: Syncs
+- operation: GET /api/v1/syncs/configurations
+  operationId: getConfigurations
+  tag: Syncs
+- operation: POST /api/v1/schedule_syncs
+  operationId: manualSyncTrigger
+  tag: Syncs
+- operation: DELETE /api/v1/schedule_syncs/{sync_id}
+  operationId: cancelSyncTrigger
+  tag: Syncs
+- operation: POST /enterprise/api/v1/syncs/{sync_id}/test
+  operationId: testSync
+  tag: Syncs
+- operation: GET /api/v1/syncs/{sync_id}/sync_runs
+  operationId: getSyncRuns
+  tag: SyncRuns
+- operation: GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}
+  operationId: getSyncRun
+  tag: SyncRun
+- operation: GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records
+  operationId: getSyncRecords
+  tag: SyncRecords
+coverage:
+  mcp_tools: 3
+  rest_operations: 29
+  bound: 0
+  mcp_only: 3
+  rest_only: 29
+  rest_operations_reachable_via_mcp: 0
+  percent_rest_covered_by_mcp: 0.0
+confidence_note: >-
+  Both sides were read live and anonymously - the MCP tool schemas from a successful tools/list
+  and the REST operations from the provider's own published OpenAPI documents - so the zero
+  overlap is observed, not inferred.

@@ -1,0 +1,259 @@
+generated: '2026-09-13'
+method: derived
+source: openapi/ai-squared-openapi.yml
+summary: >-
+  Derived from the id-reference fields and response shapes of the 29 published operations. The
+  contract declares no components.schemas at all - every request and response body is an inline
+  anonymous object - so the graph below was reconstructed from foreign-key field names
+  (connector_id, model_id, source_id, destination_id, sync_id, sync_run_id, workspace_id) rather
+  than from $ref links. Entities have no published id-prefix scheme; ids are plain integers.
+schema_reuse:
+  components_schemas: 0
+  refs: 0
+  note: >-
+    Zero schema reuse. The same Connector object is re-declared inline in six operations and the
+    same Sync object in five. This is the single biggest contract-quality gap in the published
+    spec and is a gap in the provider's contract, not in this derivation.
+entities:
+- name: Workspace
+  description: >-
+    The tenancy boundary. Every connector, model, catalog and sync is scoped to a workspace, and
+    workspaces roll up into an organization (organizations appear in the product and the embed
+    allowlist docs but not in this API).
+  id_field: workspace_id
+  id_type: integer
+  operations: []
+  note: >-
+    Referenced by connectors, catalogs and syncs but has NO CRUD operations in the published API -
+    workspaces are created and managed in the dashboard only.
+- name: Connector
+  description: >-
+    A configured connection to a data source or destination, or to an AI/ML model endpoint. Carries
+    connector_type (source | destination), connector_subtype, connector_name, configuration, and a
+    connection_specification describing what configuration it needs.
+  id_field: id
+  id_type: integer
+  fields:
+  - id
+  - name
+  - connector_type
+  - connector_subtype
+  - connector_name
+  - description
+  - workspace_id
+  - configuration
+  - created_at
+  - updated_at
+  operations:
+  - POST /api/v1/connectors
+  - GET /api/v1/connectors
+  - GET /api/v1/connectors/{id}
+  - PUT /api/v1/connectors/{id}
+  - DELETE /api/v1/connectors/{id}
+  - GET /api/v1/connectors/{id}/discover
+  - POST /api/v1/connectors/{id}/query_source
+- name: ConnectorDefinition
+  description: >-
+    The catalogue entry for a connector TYPE - its connection_spec, icon, documentation_url,
+    release_stage, support_level, and whether it supports dbt or normalization. Read-only; this is
+    what AI Squared ships, not what a customer configures.
+  id_field: connector_name
+  id_type: string
+  fields:
+  - name
+  - connector_type
+  - connector_subtype
+  - documentation_url
+  - github_issue_label
+  - icon
+  - license
+  - release_stage
+  - support_level
+  - tags
+  - connection_spec
+  operations:
+  - GET /api/v1/connector_definitions
+  - GET /api/v1/connector_definitions/{connector_name}
+  - POST /api/v1/connector_definitions/check_connection
+- name: Catalog
+  description: >-
+    The schema a connector exposes - a collection of Streams. Each stream carries name, url,
+    json_schema, action, batch_support, batch_size, request_method, plus per-stream and
+    catalog-level throttles (request_rate_limit, request_rate_limit_unit,
+    request_rate_concurrency). Returns a catalog_hash.
+  id_field: id
+  id_type: integer
+  fields:
+  - id
+  - workspace_id
+  - connector_id
+  - catalog
+  - catalog_hash
+  operations:
+  - POST /api/v1/catalogs
+  - PUT /api/v1/catalogs/{id}
+  note: No GET and no DELETE for catalogs is published.
+- name: Stream
+  description: >-
+    A single addressable resource inside a Catalog - a warehouse table, a REST resource, a data
+    stream. Not independently addressable in the REST API; it exists only nested inside a Catalog.
+  embedded_in: Catalog
+  fields:
+  - name
+  - url
+  - json_schema
+  - action
+  - batch_support
+  - batch_size
+  - request_method
+  - request_rate_limit
+  - request_rate_limit_unit
+  - request_rate_concurrency
+- name: Model
+  description: >-
+    The definition of what data to extract from a source - a query plus query_type and
+    primary_key, bound to a connector.
+  id_field: id
+  id_type: integer
+  fields:
+  - id
+  - name
+  - description
+  - query
+  - query_type
+  - primary_key
+  - connector_id
+  - created_at
+  - updated_at
+  operations:
+  - POST /api/v1/models
+  - GET /api/v1/models
+  - GET /api/v1/models/{id}
+  - PUT /api/v1/models/{id}
+  - DELETE /api/v1/models/{id}
+- name: Sync
+  description: >-
+    The rule set for moving data from a source connector to a destination connector via a model,
+    with a sync_mode, schedule_type, cron_expression or sync_interval, cursor_field, stream_name
+    and a configuration mapping of fields.
+  id_field: id
+  id_type: integer
+  fields:
+  - id
+  - source_id
+  - model_id
+  - destination_id
+  - configuration
+  - schedule_type
+  - sync_mode
+  - sync_interval
+  - sync_interval_unit
+  - cron_expression
+  - cursor_field
+  - stream_name
+  - status
+  operations:
+  - POST /api/v1/syncs
+  - GET /api/v1/syncs
+  - GET /api/v1/syncs/{id}
+  - PUT /api/v1/syncs/{id}
+  - DELETE /api/v1/syncs/{id}
+  - GET /api/v1/syncs/configurations
+  - POST /api/v1/schedule_syncs
+  - DELETE /api/v1/schedule_syncs/{sync_id}
+  - POST /enterprise/api/v1/syncs/{sync_id}/test
+- name: SyncRun
+  description: >-
+    One execution of a Sync - started_at, finished_at, duration, and the row-level tallies
+    total_rows, successful_rows, failed_rows, skipped_rows.
+  id_field: id
+  id_type: integer
+  fields:
+  - id
+  - sync_id
+  - status
+  - source_id
+  - destination_id
+  - started_at
+  - finished_at
+  - duration
+  - total_rows
+  - successful_rows
+  - failed_rows
+  - skipped_rows
+  operations:
+  - GET /api/v1/syncs/{sync_id}/sync_runs
+  - GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}
+  note: Read-only; sync runs are created by triggering a sync, never posted directly.
+- name: SyncRecord
+  description: >-
+    One row moved (or attempted) inside a SyncRun - the record payload, its status, and any error.
+  id_field: id
+  id_type: integer
+  fields:
+  - id
+  - sync_run_id
+  - sync_id
+  - status
+  - record
+  - error
+  - created_at
+  - updated_at
+  operations:
+  - GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records
+  note: Read-only, and the only place row-level sync outcomes are exposed.
+relationships:
+- from: Connector
+  to: Workspace
+  kind: belongs_to
+  via: workspace_id
+- from: Connector
+  to: ConnectorDefinition
+  kind: belongs_to
+  via: connector_name
+- from: Catalog
+  to: Connector
+  kind: belongs_to
+  via: connector_id
+- from: Catalog
+  to: Workspace
+  kind: belongs_to
+  via: workspace_id
+- from: Catalog
+  to: Stream
+  kind: has_many
+  via: catalog.streams[]
+- from: Model
+  to: Connector
+  kind: belongs_to
+  via: connector_id
+- from: Sync
+  to: Connector
+  kind: belongs_to
+  via: source_id
+  role: source
+- from: Sync
+  to: Connector
+  kind: belongs_to
+  via: destination_id
+  role: destination
+- from: Sync
+  to: Model
+  kind: belongs_to
+  via: model_id
+- from: Sync
+  to: SyncRun
+  kind: has_many
+  via: sync_id
+- from: SyncRun
+  to: SyncRecord
+  kind: has_many
+  via: sync_run_id
+- from: SyncRecord
+  to: Sync
+  kind: belongs_to
+  via: sync_id
+core_flow: >-
+  Connector (source) + Connector (destination) -> Catalog (destination schema) -> Model (what to
+  extract) -> Sync (the movement rule) -> SyncRun (one execution) -> SyncRecord (one row). That
+  chain is the whole product, and it is the order in which an integrator must create objects.

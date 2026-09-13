@@ -1,0 +1,103 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the AI Squared API
+  version: 1.0.0
+x-provenance:
+  generated: '2026-09-13'
+  method: generated
+  source: openapi/ai-squared-openapi.yml
+  extends: openapi/ai-squared-openapi.yml
+  note: >-
+    Captures API Evangelist's additions WITHOUT mutating the provider's contract. Everything here
+    is either an operationId the provider omitted (named after the provider's own documentation
+    page slug for that operation, never invented semantics), a documented-but-undeclared response
+    (the 429 the API reference states), or a pointer to a derived artifact in this repository.
+    Apply with an Overlay 1.0.0 processor; the original spec in openapi/ stays verbatim.
+actions:
+- target: $.info
+  update:
+    x-artifacts:
+      conventions: conventions/ai-squared-conventions.yml
+      errors: errors/ai-squared-problem-types.yml
+      rate_limits: rate-limits/ai-squared-rate-limits.yml
+      authentication: authentication/ai-squared-authentication.yml
+      data_model: data-model/ai-squared-data-model.yml
+      lifecycle: lifecycle/ai-squared-lifecycle.yml
+      conformance: conformance/ai-squared-conformance.yml
+    x-rate-limit:
+      requests: 100
+      window: 1 minute
+      status: 429
+      source: https://docs.squared.ai/api-reference/introduction
+    x-pagination:
+      default_page_size: 100
+      max_page_size: 100
+      params:
+      - page
+      - page_size
+      bracketed_params:
+      - page[number]
+      - page[size]
+    x-idempotency:
+      supported: false
+      coverage: none
+- target: $.paths['/api/v1/connectors'].post
+  update:
+    operationId: createConnector
+- target: $.paths['/api/v1/connectors'].get
+  update:
+    operationId: listConnectors
+- target: $.paths['/api/v1/connectors/{id}'].get
+  update:
+    operationId: getConnector
+- target: $.paths['/api/v1/connectors/{id}'].put
+  update:
+    operationId: updateConnector
+- target: $.paths['/api/v1/connectors/{id}'].delete
+  update:
+    operationId: deleteConnector
+- target: $.paths['/api/v1/connectors/{id}/discover'].get
+  update:
+    operationId: discoverConnectorCatalog
+- target: $.paths['/api/v1/connectors/{id}/query_source'].post
+  update:
+    operationId: querySource
+- target: $.paths['/api/v1/connector_definitions'].get
+  update:
+    operationId: listConnectorDefinitions
+- target: $.paths['/api/v1/connector_definitions/{connector_name}'].get
+  update:
+    operationId: getConnectorDefinition
+- target: $.paths['/api/v1/connector_definitions/check_connection'].post
+  update:
+    operationId: checkConnection
+    x-dry-run: true
+- target: $.paths['/api/v1/models'].post
+  update:
+    operationId: createModel
+- target: $.paths['/api/v1/models'].get
+  update:
+    operationId: listModels
+- target: $.paths['/api/v1/models/{id}'].get
+  update:
+    operationId: getModel
+- target: $.paths['/api/v1/models/{id}'].put
+  update:
+    operationId: updateModel
+- target: $.paths['/api/v1/models/{id}'].delete
+  update:
+    operationId: deleteModel
+- target: $.paths['/api/v1/schedule_syncs'].post
+  update:
+    x-reversal:
+      operation: DELETE /api/v1/schedule_syncs/{sync_id}
+      operationId: cancelSyncTrigger
+      kind: cancel
+      window: null
+      window_note: >-
+        No window is published. Do not assume an in-flight sync can be cancelled, and do not
+        assume rows already written to the destination are rolled back.
+- target: $.paths['/enterprise/api/v1/syncs/{sync_id}/test'].post
+  update:
+    x-dry-run: true
+    x-edition: enterprise

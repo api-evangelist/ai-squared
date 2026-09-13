@@ -1,0 +1,63 @@
+generated: '2026-09-13'
+method: probed
+source: https://docs.squared.ai/.well-known/agent-card.json
+card: ai-squared-agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.squared.ai
+x-evidence:
+  fetched: '2026-09-13'
+  url: https://docs.squared.ai/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 1023
+agent:
+  name: AI Squared
+  url: https://docs.squared.ai/
+  version: '1.0.0'
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  provider_organization: AI Squared
+  documentation_url: https://docs.squared.ai/
+  capabilities:
+    streaming: false
+    push_notifications: false
+  default_input_modes:
+  - text/plain
+  default_output_modes:
+  - text/plain
+  skills:
+  - id: multiwoven
+    name: Multiwoven
+    url: https://docs.squared.ai/.well-known/agent-skills/multiwoven/skill.md
+    fetched: true
+    saved_to: ../skills/ai-squared-multiwoven-provider-published-skill.md
+    http_status: 200
+grade: conformant
+grade_basis: >-
+  Graded against A2A 1.0.0 hard checks: capabilities is an object (pass), protocolVersion is
+  present (pass, "0.3"), skills is an array (pass). The optional fields that usually separate
+  near-conformant from conformant are all present too - preferredTransport, defaultInputModes and
+  defaultOutputModes.
+deviations:
+- field: description
+  issue: >-
+    The top-level required AgentCard `description` string is absent. Every skill carries its own
+    description, but the card itself does not describe the agent.
+  severity: minor
+- field: protocolVersion
+  issue: >-
+    Declares "0.3" rather than a 1.x protocol version, so the card is published against the
+    pre-1.0 A2A protocol line.
+  severity: informational
+- field: url / supportedInterfaces
+  issue: >-
+    Both point at the documentation site root (https://docs.squared.ai/) rather than an A2A
+    JSON-RPC endpoint. The card advertises a documentation-and-skills surface; there is no
+    reachable A2A task endpoint behind it.
+  severity: major
+note: >-
+  This card is served from AI Squared's own documentation host. It points at a single published
+  Agent Skill (Multiwoven), which was fetched (HTTP 200) and saved verbatim under skills/. The
+  same host also serves an MCP discovery manifest at /.well-known/mcp.json - see mcp/.
