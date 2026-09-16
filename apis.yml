@@ -1,32 +1,30 @@
 aid: ai-squared
 name: AI Squared
-description: 'AI Squared is an enterprise data-and-AI integration platform that connects
-  data sources (Snowflake, BigQuery, Databricks, Redshift, PostgreSQL, S3, Salesforce
-  and more) to AI/ML model endpoints (OpenAI, Anthropic, Google Vertex, AWS Bedrock,
-  SageMaker, WatsonX) and then pushes the resulting insights back into the business
-  applications where work happens. The company acquired Multiwoven, the open-source
-  Reverse ETL / composable CDP project, in 2024 and now develops it as the open core
-  of the platform under AGPL-3.0. Its public REST API at api.squared.ai covers
-  connectors, connector definitions, models, catalogs, syncs, sync runs and sync
-  records, authenticated with a JWT bearer token. AI Squared is SOC 2 Type II certified
-  and ships SaaS, cloud, on-premise and air-gapped federal deployments.'
+description: AI Squared is an enterprise data-and-AI integration platform that connects data sources (Snowflake,
+  BigQuery, Databricks, Redshift, PostgreSQL, S3, Salesforce and more) to AI/ML model endpoints (OpenAI,
+  Anthropic, Google Vertex, AWS Bedrock, SageMaker, WatsonX) and then pushes the resulting insights back
+  into the business applications where work happens. The company acquired Multiwoven, the open-source
+  Reverse ETL / composable CDP project, in 2024 and now develops it as the open core of the platform under
+  AGPL-3.0. Its public REST API at api.squared.ai covers connectors, connector definitions, models, catalogs,
+  syncs, sync runs and sync records, authenticated with a JWT bearer token. AI Squared is SOC 2 Type II
+  certified and ships SaaS, cloud, on-premise and air-gapped federal deployments.
 image: https://i0.wp.com/aisquared.ai/wp-content/uploads/2026/06/screenshot.png
 url: https://raw.githubusercontent.com/api-evangelist/ai-squared/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
 specificationVersion: '0.20'
 created: '2026-09-13'
-modified: '2026-09-13'
+modified: '2026-09-16'
 position: Producing
 tags:
 - Data Integration
 - Reverse ETL
 - Artificial Intelligence
-- Machine Learning
+- Machine-Learning
 - Customer Data Platform
 - Data Activation
-- Workflow Automation
-- Open Source
+- Workflow-Automation
+- Open-Source
 - MCP
 - Enterprise
 tags_raw:
@@ -41,38 +39,188 @@ tags_raw:
 - mcp
 - enterprise
 apis:
-- aid: ai-squared:ai-squared-api
-  name: AI Squared API
-  description: 'REST API for the AI Squared platform covering connectors (data and
-    AI/ML sources and destinations), connector definitions and connection checks,
-    models, catalogs, syncs, scheduled/manual sync triggers, sync runs and sync
-    records. JSON request and response bodies, JWT bearer authentication, page /
-    page_size pagination capped at 100 items, and a documented 100 requests-per-minute
-    rate limit returning 429.'
-  image: https://i0.wp.com/aisquared.ai/wp-content/uploads/2026/06/screenshot.png
+- aid: ai-squared:ai-squared-catalogs-api
+  name: AI Squared Catalogs API
+  description: The Catalogs API from AI Squared — 2 operation(s) for catalogs.
   humanURL: https://docs.squared.ai/api-reference/introduction
   baseURL: https://api.squared.ai/api/v1/
   tags:
-  - Data Integration
-  - Reverse ETL
-  - Data Activation
-  - Connectors
-  - Syncs
-  tags_raw:
-  - data-integration
-  - reverse-etl
-  - data-activation
-  - connectors
-  - syncs
+  - Catalogs
   properties:
   - type: OpenAPI
-    url: openapi/ai-squared-openapi.yml
+    url: openapi/ai-squared-catalogs-api-openapi.yml
   - type: Documentation
     url: https://docs.squared.ai/api-reference/introduction
   - type: APIReference
     url: https://docs.squared.ai/api-reference/introduction
-  - type: Overlay
-    url: overlays/ai-squared-openapi-overlay.yaml
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+- aid: ai-squared:ai-squared-connector-definitions-api
+  name: AI Squared Connector Definitions API
+  description: The Connector Definitions API from AI Squared — 3 operation(s) for connector definitions.
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - Connector Definitions
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-connector-definitions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+- aid: ai-squared:ai-squared-connectors-api
+  name: AI Squared Connectors API
+  description: The Connectors API from AI Squared — 4 operation(s) for connectors.
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-connectors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+- aid: ai-squared:ai-squared-models-api
+  name: AI Squared Models API
+  description: The Models API from AI Squared — 2 operation(s) for models.
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+- aid: ai-squared:ai-squared-syncrecords-api
+  name: AI Squared Sync Records API
+  description: The SyncRecords API from AI Squared — 1 operation(s) for syncrecords.
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - SyncRecords
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-syncrecords-api-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+- aid: ai-squared:ai-squared-syncrun-api
+  name: AI Squared Sync Run API
+  description: The SyncRun API from AI Squared — 1 operation(s) for syncrun.
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - SyncRun
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-syncrun-api-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+- aid: ai-squared:ai-squared-syncruns-api
+  name: AI Squared Sync Runs API
+  description: The SyncRuns API from AI Squared — 1 operation(s) for syncruns.
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - SyncRuns
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-syncruns-api-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: ErrorCatalog
+    url: errors/ai-squared-problem-types.yml
+  - type: DataModel
+    url: data-model/ai-squared-data-model.yml
+  - type: Conventions
+    url: conventions/ai-squared-conventions.yml
+  - type: RateLimits
+    url: rate-limits/ai-squared-rate-limits.yml
+  - type: Authentication
+    url: authentication/ai-squared-authentication.yml
+- aid: ai-squared:ai-squared-syncs-api
+  name: AI Squared Syncs API
+  description: The Syncs API from AI Squared — 6 operation(s) for syncs.
+  humanURL: https://docs.squared.ai/api-reference/introduction
+  baseURL: https://api.squared.ai/api/v1/
+  tags:
+  - Syncs
+  properties:
+  - type: OpenAPI
+    url: openapi/ai-squared-syncs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.squared.ai/api-reference/introduction
+  - type: APIReference
+    url: https://docs.squared.ai/api-reference/introduction
   - type: ErrorCatalog
     url: errors/ai-squared-problem-types.yml
   - type: DataModel
@@ -119,7 +267,7 @@ common:
 - type: Compliance
   url: https://docs.squared.ai/deployment-and-security/security-and-compliance/overview
 - type: OpenAPI
-  url: openapi/ai-squared-openapi.yml
+  url: openapi/_original/ai-squared-openapi.yml
 - type: LLMsTxt
   url: llms/ai-squared-llms.txt
 - type: MCPServer
