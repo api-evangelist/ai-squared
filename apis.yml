@@ -16,6 +16,10 @@ specificationVersion: '0.20'
 created: '2026-09-13'
 modified: '2026-09-16'
 position: Producing
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-17
+x-docs-hosting: vercel
 tags:
 - Data Integration
 - Reverse ETL
@@ -45,6 +49,8 @@ apis:
   humanURL: https://docs.squared.ai/api-reference/introduction
   baseURL: https://api.squared.ai/api/v1/
   tags:
+  - Catalog
+  tags_raw:
   - Catalogs
   properties:
   - type: OpenAPI
@@ -189,6 +195,8 @@ apis:
   humanURL: https://docs.squared.ai/api-reference/introduction
   baseURL: https://api.squared.ai/api/v1/
   tags:
+  - Sync Runs
+  tags_raw:
   - SyncRuns
   properties:
   - type: OpenAPI
@@ -213,6 +221,8 @@ apis:
   humanURL: https://docs.squared.ai/api-reference/introduction
   baseURL: https://api.squared.ai/api/v1/
   tags:
+  - Sync
+  tags_raw:
   - Syncs
   properties:
   - type: OpenAPI
