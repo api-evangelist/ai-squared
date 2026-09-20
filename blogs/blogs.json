@@ -1,0 +1,21 @@
+{
+  "repo": "ai-squared",
+  "feeds": [
+    {
+      "source": "https://aisquared.ai/blog/",
+      "feed_url": "https://aisquared.ai/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
+      "source": "https://docs.squared.ai/open-source/community-support/overview",
+      "feed_url": "https://docs.squared.ai/open-source/community-support/overview",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-09-19T20:17:39Z"
+}
