@@ -1,0 +1,36 @@
+# Front Door AI Index — ai-squared — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: ai-squared
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: aisquared.ai
+  final_host: aisquared.ai
+  ownership: own
+  owner: ai-squared
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 82
+  host_score: 82
+  density: 46.22
+  words: 1774
+  tiers:
+    agentic: 11
+    core: 71
+    model: 0
+  ambiguous: 10
+  top_terms:
+    AI: 69
+    agentic: 7
+    agent: 6
+    AI agent: 1
+    LLMs: 1
+    MCP: 1
+    ML: 1
+    automation: 1
+    embedding: 1
+    intelligence: 1
+    llms.txt: 1
+    predictive: 1

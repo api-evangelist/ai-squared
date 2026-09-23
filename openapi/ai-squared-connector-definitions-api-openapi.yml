@@ -1,0 +1,235 @@
+openapi: 3.2.0
+info:
+  title: AI Squared Connector Definitions API
+  version: 1.0.0
+  description: The AI Squared API. REST, JSON request/response bodies, JWT bearer authentication. Base URL https://api.squared.ai/api/v1/. Assembled verbatim from the per-operation OpenAPI documents AI Squared publishes on its own documentation host (docs.squared.ai/api-reference/*).
+servers:
+- url: https://api.squared.ai
+security: []
+tags:
+- name: Connector Definitions
+paths:
+  /api/v1/connector_definitions/check_connection:
+    post:
+      tags:
+      - Connector Definitions
+      summary: Checks the connection for a specified connector definition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - source
+                  - destination
+                name:
+                  type: string
+                connection_spec:
+                  type: object
+                  description: Generic connection specification structure. Specifics depend on the connector type.
+                  additionalProperties: true
+      responses:
+        '200':
+          description: Connection check successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    enum:
+                    - success
+                    - failure
+                  details:
+                    type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+      operationId: postApiV1ConnectorDefinitionsCheckConnection
+      x-operation-id-source: derived
+  /api/v1/connector_definitions/{connector_name}:
+    get:
+      tags:
+      - Connector Definitions
+      summary: Retrieve specific connector definition based on its name
+      parameters:
+      - name: connector_name
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Name of the connector
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - destination
+        description: Type of the connector (source or destination)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  connector_type:
+                    type: string
+                  connector_subtype:
+                    type: string
+                  documentation_url:
+                    type: string
+                  github_issue_label:
+                    type: string
+                  icon:
+                    type: string
+                  license:
+                    type: string
+                  release_stage:
+                    type: string
+                  support_level:
+                    type: string
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                  connector_spec:
+                    type: object
+                    properties:
+                      documentation_url:
+                        type: string
+                      connection_specification:
+                        type: object
+                        additionalProperties: true
+                      supports_normalization:
+                        type: boolean
+                      supports_dbt:
+                        type: boolean
+                      stream_type:
+                        type: string
+                additionalProperties: true
+      security:
+      - bearerAuth: []
+      operationId: getApiV1ConnectorDefinitionsByConnectorName
+      x-operation-id-source: derived
+  /api/v1/connector_definitions:
+    get:
+      tags:
+      - Connector Definitions
+      summary: Retrieve connector definitions based on type
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - destination
+        description: Type of the connector (source or destination)
+      - name: category
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - data
+          - ai_ml
+        description: Category of the connector
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    connector_type:
+                      type: string
+                    connector_subtype:
+                      type: string
+                    documentation_url:
+                      type: string
+                    github_issue_label:
+                      type: string
+                    icon:
+                      type: string
+                    license:
+                      type: string
+                    release_stage:
+                      type: string
+                    support_level:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: string
+                    connector_spec:
+                      type: object
+                      properties:
+                        documentation_url:
+                          type: string
+                        connection_specification:
+                          type: object
+                          additionalProperties: true
+      security:
+      - bearerAuth: []
+      operationId: getApiV1ConnectorDefinitions
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-provenance:
+  generated: '2026-09-13'
+  method: searched
+  source: https://docs.squared.ai/api-reference/ (per-operation OpenAPI documents published by AI Squared)
+  assembly: mechanical merge of 29 provider-published OpenAPI 3.0.1 documents; every path item, parameter, requestBody, response and securityScheme is verbatim provider content. No operation, schema or example was authored by API Evangelist.
+  ownership: info.title "AI Squared API" and servers[] https://api.squared.ai both name this provider; the documentation host docs.squared.ai is AI Squared's own (squared.ai redirects to aisquared.ai).
+  note: AI Squared links a consolidated spec at /api-reference/openapi.yml from its llms.txt, but that path returns 404 (checked 2026-09-13); the per-operation documents embedded in each reference page are the reachable published form.
+  operation_sources:
+    POST /api/v1/connector_definitions/check_connection: https://docs.squared.ai/api-reference/connector_definitions/check_connection.md
+    GET /api/v1/connector_definitions/{connector_name}: https://docs.squared.ai/api-reference/connector_definitions/connector_definition.md
+    GET /api/v1/connector_definitions: https://docs.squared.ai/api-reference/connector_definitions/connector_definitions.md
+    POST /api/v1/models: https://docs.squared.ai/api-reference/models/create-model.md
+    POST /api/v1/catalogs: https://docs.squared.ai/api-reference/catalogs/create_catalog.md
+    POST /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/create_connector.md
+    POST /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/create_sync.md
+    DELETE /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/delete-model.md
+    DELETE /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/delete_connector.md
+    DELETE /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/delete_sync.md
+    GET /api/v1/connectors/{id}/discover: https://docs.squared.ai/api-reference/connectors/discover.md
+    GET /api/v1/models: https://docs.squared.ai/api-reference/models/get-all-models.md
+    GET /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/get-model.md
+    GET /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/get_connector.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records: https://docs.squared.ai/api-reference/sync_records/get_sync_records.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}: https://docs.squared.ai/api-reference/sync_runs/get_sync_run.md
+    GET /api/v1/syncs/{sync_id}/sync_runs: https://docs.squared.ai/api-reference/sync_runs/get_sync_runs.md
+    GET /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/get_syncs.md
+    GET /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/list_connectors.md
+    DELETE /api/v1/schedule_syncs/{sync_id}: https://docs.squared.ai/api-reference/syncs/manual_sync_cancel.md
+    POST /api/v1/schedule_syncs: https://docs.squared.ai/api-reference/syncs/manual_sync_trigger.md
+    POST /api/v1/connectors/{id}/query_source: https://docs.squared.ai/api-reference/connectors/query_source.md
+    GET /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/show_sync.md
+    GET /api/v1/syncs/configurations: https://docs.squared.ai/api-reference/syncs/sync_configuration.md
+    POST /enterprise/api/v1/syncs/{sync_id}/test: https://docs.squared.ai/api-reference/syncs/test_sync.md
+    PUT /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/update-model.md
+    PUT /api/v1/catalogs/{id}: https://docs.squared.ai/api-reference/catalogs/update_catalog.md
+    PUT /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/update_connector.md
+    PUT /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/update_sync.md

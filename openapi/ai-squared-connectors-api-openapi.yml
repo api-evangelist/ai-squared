@@ -1,0 +1,468 @@
+openapi: 3.2.0
+info:
+  title: AI Squared Connectors API
+  version: 1.0.0
+  description: The AI Squared API. REST, JSON request/response bodies, JWT bearer authentication. Base URL https://api.squared.ai/api/v1/. Assembled verbatim from the per-operation OpenAPI documents AI Squared publishes on its own documentation host (docs.squared.ai/api-reference/*).
+servers:
+- url: https://api.squared.ai
+security: []
+tags:
+- name: Connectors
+paths:
+  /api/v1/connectors:
+    post:
+      tags:
+      - Connectors
+      summary: Creates a connector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connector:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    connector_type:
+                      type: string
+                      enum:
+                      - source
+                      - destination
+                    connector_name:
+                      type: string
+                    configuration:
+                      type: object
+                      description: Configuration details for the connector. Structure depends on the connector definition.
+                      additionalProperties: true
+                  required:
+                  - name
+                  - connector_type
+                  - connector_name
+                  - configuration
+      responses:
+        '201':
+          description: Connector created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          connector_type:
+                            type: string
+                          workspace_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          configuration:
+                            type: object
+                            description: Specific configuration of the created connector.
+                            additionalProperties: true
+                          connector_name:
+                            type: string
+                          icon:
+                            type: string
+      security:
+      - bearerAuth: []
+      operationId: postApiV1Connectors
+      x-operation-id-source: derived
+    get:
+      tags:
+      - Connectors
+      summary: Lists all connectors
+      parameters:
+      - name: type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - destination
+        description: Type of the connector
+      - name: category
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - data
+          - ai_ml
+        description: Category of the connector
+      responses:
+        '200':
+          description: A list of connectors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                        attributes:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            connector_type:
+                              type: string
+                            workspace_id:
+                              type: integer
+                            created_at:
+                              type: string
+                              format: date-time
+                            updated_at:
+                              type: string
+                              format: date-time
+                            configuration:
+                              type: object
+                              description: Generic configuration for the connector. Structure varies based on the connector_type.
+                              additionalProperties: true
+                            connector_name:
+                              type: string
+                            icon:
+                              type: string
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                      first:
+                        type: string
+                      prev:
+                        type: string
+                      next:
+                        type: string
+                      last:
+                        type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+      operationId: getApiV1Connectors
+      x-operation-id-source: derived
+  /api/v1/connectors/{id}:
+    delete:
+      tags:
+      - Connectors
+      summary: Deletes a specific connector by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      responses:
+        '204':
+          description: No content, indicating successful deletion
+      security:
+      - bearerAuth: []
+      operationId: deleteApiV1ConnectorsById
+      x-operation-id-source: derived
+    get:
+      tags:
+      - Connectors
+      summary: Retrieves a specific connector by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      responses:
+        '200':
+          description: A single connector object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          connector_type:
+                            type: string
+                          workspace_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          configuration:
+                            type: object
+                            description: Generic configuration for the connector. Structure varies based on the connector_type.
+                            additionalProperties: true
+                          connector_name:
+                            type: string
+                          icon:
+                            type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+      operationId: getApiV1ConnectorsById
+      x-operation-id-source: derived
+    put:
+      tags:
+      - Connectors
+      summary: Updates a specific connector by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connector:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    connector_type:
+                      type: string
+                      enum:
+                      - source
+                      - destination
+                    configuration:
+                      type: object
+                      description: Generic configuration structure. Specifics depend on the connector type.
+                      additionalProperties: true
+                    connector_name:
+                      type: string
+                  required:
+                  - name
+                  - connector_type
+                  - configuration
+                  - connector_name
+      responses:
+        '200':
+          description: Connector updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          connector_type:
+                            type: string
+                          workspace_id:
+                            type: integer
+                          created_at:
+                            type: string
+                            format: date-time
+                          updated_at:
+                            type: string
+                            format: date-time
+                          configuration:
+                            type: object
+                            description: Specific configuration of the updated connector.
+                            additionalProperties: true
+                          connector_name:
+                            type: string
+                          icon:
+                            type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+      operationId: putApiV1ConnectorsById
+      x-operation-id-source: derived
+  /api/v1/connectors/{id}/discover:
+    get:
+      tags:
+      - Connectors
+      summary: Discovers catalog information for a specified connector
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique ID of the connector
+      - name: refresh
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Set to true to force refresh the catalog
+      responses:
+        '200':
+          description: Catalog information for the connector
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                      attributes:
+                        type: object
+                        properties:
+                          connector_id:
+                            type: integer
+                          workspace_id:
+                            type: integer
+                          catalog:
+                            type: object
+                            properties:
+                              streams:
+                                type: array
+                                description: Array of stream objects, varying based on connector ID.
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    action:
+                                      type: string
+                                    json_schema:
+                                      type: object
+                                      additionalProperties: true
+                                    url:
+                                      type: string
+                                    request_method:
+                                      type: string
+                          catalog_hash:
+                            type: string
+                additionalProperties: false
+      security:
+      - bearerAuth: []
+      operationId: getApiV1ConnectorsByIdDiscover
+      x-operation-id-source: derived
+  /api/v1/connectors/{id}/query_source:
+    post:
+      tags:
+      - Connectors
+      summary: Query your source data
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The ID of the connector to query
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: SQL query to be executed
+      responses:
+        '200':
+          description: An array of generic JSON objects representing the preview data.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+      security:
+      - bearerAuth: []
+      operationId: postApiV1ConnectorsByIdQuerySource
+      x-operation-id-source: derived
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-provenance:
+  generated: '2026-09-13'
+  method: searched
+  source: https://docs.squared.ai/api-reference/ (per-operation OpenAPI documents published by AI Squared)
+  assembly: mechanical merge of 29 provider-published OpenAPI 3.0.1 documents; every path item, parameter, requestBody, response and securityScheme is verbatim provider content. No operation, schema or example was authored by API Evangelist.
+  ownership: info.title "AI Squared API" and servers[] https://api.squared.ai both name this provider; the documentation host docs.squared.ai is AI Squared's own (squared.ai redirects to aisquared.ai).
+  note: AI Squared links a consolidated spec at /api-reference/openapi.yml from its llms.txt, but that path returns 404 (checked 2026-09-13); the per-operation documents embedded in each reference page are the reachable published form.
+  operation_sources:
+    POST /api/v1/connector_definitions/check_connection: https://docs.squared.ai/api-reference/connector_definitions/check_connection.md
+    GET /api/v1/connector_definitions/{connector_name}: https://docs.squared.ai/api-reference/connector_definitions/connector_definition.md
+    GET /api/v1/connector_definitions: https://docs.squared.ai/api-reference/connector_definitions/connector_definitions.md
+    POST /api/v1/models: https://docs.squared.ai/api-reference/models/create-model.md
+    POST /api/v1/catalogs: https://docs.squared.ai/api-reference/catalogs/create_catalog.md
+    POST /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/create_connector.md
+    POST /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/create_sync.md
+    DELETE /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/delete-model.md
+    DELETE /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/delete_connector.md
+    DELETE /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/delete_sync.md
+    GET /api/v1/connectors/{id}/discover: https://docs.squared.ai/api-reference/connectors/discover.md
+    GET /api/v1/models: https://docs.squared.ai/api-reference/models/get-all-models.md
+    GET /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/get-model.md
+    GET /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/get_connector.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records: https://docs.squared.ai/api-reference/sync_records/get_sync_records.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}: https://docs.squared.ai/api-reference/sync_runs/get_sync_run.md
+    GET /api/v1/syncs/{sync_id}/sync_runs: https://docs.squared.ai/api-reference/sync_runs/get_sync_runs.md
+    GET /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/get_syncs.md
+    GET /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/list_connectors.md
+    DELETE /api/v1/schedule_syncs/{sync_id}: https://docs.squared.ai/api-reference/syncs/manual_sync_cancel.md
+    POST /api/v1/schedule_syncs: https://docs.squared.ai/api-reference/syncs/manual_sync_trigger.md
+    POST /api/v1/connectors/{id}/query_source: https://docs.squared.ai/api-reference/connectors/query_source.md
+    GET /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/show_sync.md
+    GET /api/v1/syncs/configurations: https://docs.squared.ai/api-reference/syncs/sync_configuration.md
+    POST /enterprise/api/v1/syncs/{sync_id}/test: https://docs.squared.ai/api-reference/syncs/test_sync.md
+    PUT /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/update-model.md
+    PUT /api/v1/catalogs/{id}: https://docs.squared.ai/api-reference/catalogs/update_catalog.md
+    PUT /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/update_connector.md
+    PUT /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/update_sync.md

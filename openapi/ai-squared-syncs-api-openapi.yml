@@ -1,0 +1,653 @@
+openapi: 3.2.0
+info:
+  title: AI Squared Syncs API
+  version: 1.0.0
+  description: The AI Squared API. REST, JSON request/response bodies, JWT bearer authentication. Base URL https://api.squared.ai/api/v1/. Assembled verbatim from the per-operation OpenAPI documents AI Squared publishes on its own documentation host (docs.squared.ai/api-reference/*).
+servers:
+- url: https://api.squared.ai
+security: []
+tags:
+- name: Syncs
+paths:
+  /api/v1/syncs:
+    post:
+      tags:
+      - Syncs
+      summary: Create a new sync operation
+      operationId: createSync
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sync:
+                  type: object
+                  properties:
+                    source_id:
+                      type: integer
+                    destination_id:
+                      type: integer
+                    model_id:
+                      type: integer
+                    schedule_type:
+                      type: string
+                      enum:
+                      - automated
+                    configuration:
+                      type: object
+                      additionalProperties: true
+                    stream_name:
+                      type: string
+                    sync_mode:
+                      type: string
+                      enum:
+                      - full_refresh
+                    sync_interval:
+                      type: integer
+                    sync_interval_unit:
+                      type: string
+                      enum:
+                      - minutes
+                    cron_expression:
+                      type: string
+                    cursor_field:
+                      type: string
+                  required:
+                  - source_id
+                  - destination_id
+                  - model_id
+                  - schedule_type
+                  - configuration
+                  - stream_name
+                  - sync_mode
+                  - sync_interval
+                  - sync_interval_unit
+      responses:
+        '200':
+          description: Sync operation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                    - syncs
+                  attributes:
+                    type: object
+                    properties:
+                      source_id:
+                        type: integer
+                      destination_id:
+                        type: integer
+                      model_id:
+                        type: integer
+                      configuration:
+                        type: object
+                        additionalProperties: true
+                      schedule_type:
+                        type: string
+                        enum:
+                        - automated
+                      sync_mode:
+                        type: string
+                        enum:
+                        - full_refresh
+                      sync_interval:
+                        type: integer
+                      sync_interval_unit:
+                        type: string
+                        enum:
+                        - minutes
+                      cron_expression:
+                        type: string
+                      cursor_field:
+                        type: string
+                      stream_name:
+                        type: string
+                      status:
+                        type: string
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Syncs
+      summary: List all sync operations
+      operationId: listSyncs
+      parameters:
+      - name: page[number]
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Page number for pagination
+      - name: page[size]
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Number of items per page for pagination
+      responses:
+        '200':
+          description: A list of sync operations
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        type:
+                          type: string
+                          enum:
+                          - syncs
+                        attributes:
+                          type: object
+                          properties:
+                            source_id:
+                              type: integer
+                            destination_id:
+                              type: integer
+                            model_id:
+                              type: integer
+                            configuration:
+                              type: object
+                              additionalProperties: true
+                            schedule_type:
+                              type: string
+                              enum:
+                              - automated
+                            sync_mode:
+                              type: string
+                              enum:
+                              - full_refresh
+                            sync_interval:
+                              type: integer
+                            sync_interval_unit:
+                              type: string
+                              enum:
+                              - minutes
+                            cron_expression:
+                              type: string
+                            cursor_field:
+                              type: string
+                            stream_name:
+                              type: string
+                            status:
+                              type: string
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        format: uri
+                      prev:
+                        type: string
+                        format: uri
+                      next:
+                        type: string
+                        format: uri
+                      last:
+                        type: string
+                        format: uri
+                required:
+                - data
+                - links
+      security:
+      - bearerAuth: []
+  /api/v1/syncs/{id}:
+    delete:
+      tags:
+      - Syncs
+      summary: Delete a specific sync operation
+      operationId: deleteSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The ID of the sync operation to delete
+      responses:
+        '204':
+          description: No content, indicating the sync operation was successfully deleted
+      security:
+      - bearerAuth: []
+    get:
+      tags:
+      - Syncs
+      summary: Show details of a specific sync operation
+      operationId: showSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sync details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                    - syncs
+                  attributes:
+                    type: object
+                    properties:
+                      source_id:
+                        type: integer
+                      destination_id:
+                        type: integer
+                      model_id:
+                        type: integer
+                      configuration:
+                        type: object
+                        additionalProperties: true
+                      schedule_type:
+                        type: string
+                        enum:
+                        - automated
+                      sync_mode:
+                        type: string
+                        enum:
+                        - full_refresh
+                      sync_interval:
+                        type: integer
+                      sync_interval_unit:
+                        type: string
+                        enum:
+                        - minutes
+                      cron_expression:
+                        type: string
+                      cursor_field:
+                        type: string
+                      stream_name:
+                        type: string
+                      status:
+                        type: string
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Syncs
+      summary: Update a specific sync operation
+      operationId: updateSync
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sync:
+                  type: object
+                  properties:
+                    source_id:
+                      type: integer
+                    destination_id:
+                      type: integer
+                    model_id:
+                      type: integer
+                    schedule_type:
+                      type: string
+                    configuration:
+                      type: object
+                      additionalProperties: true
+                    stream_name:
+                      type: string
+                    sync_mode:
+                      type: string
+                    sync_interval:
+                      type: integer
+                    sync_interval_unit:
+                      type: string
+                    cron_expression:
+                      type: string
+      responses:
+        '200':
+          description: Sync operation updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - syncs
+                      attributes:
+                        type: object
+                        properties:
+                          source_id:
+                            type: integer
+                          destination_id:
+                            type: integer
+                          model_id:
+                            type: integer
+                          configuration:
+                            type: object
+                            additionalProperties: true
+                          schedule_type:
+                            type: string
+                            enum:
+                            - automated
+                          sync_mode:
+                            type: string
+                            enum:
+                            - full_refresh
+                          sync_interval:
+                            type: integer
+                          sync_interval_unit:
+                            type: string
+                            enum:
+                            - minutes
+                          cron_expression:
+                            type: string
+                          cursor_field:
+                            type: string
+                          stream_name:
+                            type: string
+                          status:
+                            type: string
+      security:
+      - bearerAuth: []
+  /api/v1/schedule_syncs/{sync_id}:
+    delete:
+      tags:
+      - Syncs
+      summary: Cancel a Manual Sync
+      description: Cancel a Manual Sync using the sync ID.
+      operationId: cancelSyncTrigger
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        description: The ID of the sync to be canceled
+        schema:
+          type: integer
+          example: 72
+      responses:
+        '200':
+          description: Sync cancelled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync cancelled successfully
+      security:
+      - bearerAuth: []
+  /api/v1/schedule_syncs:
+    post:
+      tags:
+      - Syncs
+      summary: Trigger a manual Sync
+      description: Trigger a manual Sync by providing the sync ID.
+      operationId: manualSyncTrigger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule_sync:
+                  type: object
+                  properties:
+                    sync_id:
+                      type: integer
+                      description: ID of the sync to be scheduled
+                      example: 10
+                  required:
+                  - sync_id
+      responses:
+        '200':
+          description: Sync scheduled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync scheduled successfully
+      security:
+      - bearerAuth: []
+  /api/v1/syncs/configurations:
+    get:
+      tags:
+      - Syncs
+      summary: Get report data based on given type
+      operationId: getConfigurations
+      responses:
+        '200':
+          description: Successfully retrieved report data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    description: Data object containing configuration details.
+                    properties:
+                      configurations:
+                        type: object
+                        description: Configuration details.
+                        properties:
+                          catalog_mapping_types:
+                            type: object
+                            description: Mapping types for catalog data.
+                            properties:
+                              standard:
+                                type: string
+                                description: Details for standard mapping type (currently empty).
+                              static:
+                                type: object
+                                description: Details for static mapping type.
+                                properties:
+                                  string:
+                                    type: object
+                                    description: Details for string type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for string field.
+                                        enum:
+                                        - string
+                                      description:
+                                        type: string
+                                        description: Description of the string field.
+                                  number:
+                                    type: object
+                                    description: Details for number type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for number field.
+                                        enum:
+                                        - float
+                                      description:
+                                        type: string
+                                        description: Description of the number field.
+                                  boolean:
+                                    type: object
+                                    description: Details for boolean type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for boolean field.
+                                        enum:
+                                        - boolean
+                                      description:
+                                        type: string
+                                        description: Description of the boolean field.
+                                  'null':
+                                    type: object
+                                    description: Details for null type within static mapping.
+                                    properties:
+                                      type:
+                                        type: string
+                                        description: Data type for null field.
+                                        enum:
+                                        - null
+                                      description:
+                                        type: string
+                                        description: Description of the null field.
+                              template:
+                                type: object
+                                description: Details for template mapping type.
+                                properties:
+                                  variable:
+                                    type: object
+                                    description: Details for variables within template mapping.
+                                    properties:
+                                      current_timestamp:
+                                        type: object
+                                        description: Details for current_timestamp variable.
+                                        properties:
+                                          type:
+                                            type: string
+                                            description: Data type for current_timestamp variable.
+                                            enum:
+                                            - datetime
+                                          description:
+                                            type: string
+                                            description: Description of the current_timestamp variable.
+                                          value:
+                                            type: string
+                                            description: Expression to generate current timestamp.
+                                  filter:
+                                    type: object
+                                    description: Details for filters within template mapping.
+                                    properties:
+                                      cast:
+                                        type: object
+                                        description: Details for cast filter.
+                                        properties:
+                                          description:
+                                            type: string
+                                            description: Description of the cast filter.
+                                          value:
+                                            type: string
+                                            description: Expression to cast value to specified type.
+                                      regex_replace:
+                                        type: object
+                                        description: Details for regex_replace filter.
+                                        properties:
+                                          description:
+                                            type: string
+                                            description: Description of the regex_replace filter.
+                                          value:
+                                            type: string
+                                            description: Expression to perform regex replace operation.
+      security:
+      - bearerAuth: []
+  /enterprise/api/v1/syncs/{sync_id}/test:
+    post:
+      tags:
+      - Syncs
+      summary: Trigger a Sync Test
+      description: Triggers a test for the specified sync using the sync ID.
+      operationId: testSync
+      parameters:
+      - name: sync_id
+        in: path
+        required: true
+        description: The ID of the sync to be tested
+        schema:
+          type: integer
+          example: 72
+      responses:
+        '200':
+          description: Sync test triggered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sync test triggered successfully
+      security:
+      - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-provenance:
+  generated: '2026-09-13'
+  method: searched
+  source: https://docs.squared.ai/api-reference/ (per-operation OpenAPI documents published by AI Squared)
+  assembly: mechanical merge of 29 provider-published OpenAPI 3.0.1 documents; every path item, parameter, requestBody, response and securityScheme is verbatim provider content. No operation, schema or example was authored by API Evangelist.
+  ownership: info.title "AI Squared API" and servers[] https://api.squared.ai both name this provider; the documentation host docs.squared.ai is AI Squared's own (squared.ai redirects to aisquared.ai).
+  note: AI Squared links a consolidated spec at /api-reference/openapi.yml from its llms.txt, but that path returns 404 (checked 2026-09-13); the per-operation documents embedded in each reference page are the reachable published form.
+  operation_sources:
+    POST /api/v1/connector_definitions/check_connection: https://docs.squared.ai/api-reference/connector_definitions/check_connection.md
+    GET /api/v1/connector_definitions/{connector_name}: https://docs.squared.ai/api-reference/connector_definitions/connector_definition.md
+    GET /api/v1/connector_definitions: https://docs.squared.ai/api-reference/connector_definitions/connector_definitions.md
+    POST /api/v1/models: https://docs.squared.ai/api-reference/models/create-model.md
+    POST /api/v1/catalogs: https://docs.squared.ai/api-reference/catalogs/create_catalog.md
+    POST /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/create_connector.md
+    POST /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/create_sync.md
+    DELETE /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/delete-model.md
+    DELETE /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/delete_connector.md
+    DELETE /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/delete_sync.md
+    GET /api/v1/connectors/{id}/discover: https://docs.squared.ai/api-reference/connectors/discover.md
+    GET /api/v1/models: https://docs.squared.ai/api-reference/models/get-all-models.md
+    GET /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/get-model.md
+    GET /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/get_connector.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}/sync_records: https://docs.squared.ai/api-reference/sync_records/get_sync_records.md
+    GET /api/v1/syncs/{sync_id}/sync_runs/{sync_run_id}: https://docs.squared.ai/api-reference/sync_runs/get_sync_run.md
+    GET /api/v1/syncs/{sync_id}/sync_runs: https://docs.squared.ai/api-reference/sync_runs/get_sync_runs.md
+    GET /api/v1/syncs: https://docs.squared.ai/api-reference/syncs/get_syncs.md
+    GET /api/v1/connectors: https://docs.squared.ai/api-reference/connectors/list_connectors.md
+    DELETE /api/v1/schedule_syncs/{sync_id}: https://docs.squared.ai/api-reference/syncs/manual_sync_cancel.md
+    POST /api/v1/schedule_syncs: https://docs.squared.ai/api-reference/syncs/manual_sync_trigger.md
+    POST /api/v1/connectors/{id}/query_source: https://docs.squared.ai/api-reference/connectors/query_source.md
+    GET /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/show_sync.md
+    GET /api/v1/syncs/configurations: https://docs.squared.ai/api-reference/syncs/sync_configuration.md
+    POST /enterprise/api/v1/syncs/{sync_id}/test: https://docs.squared.ai/api-reference/syncs/test_sync.md
+    PUT /api/v1/models/{id}: https://docs.squared.ai/api-reference/models/update-model.md
+    PUT /api/v1/catalogs/{id}: https://docs.squared.ai/api-reference/catalogs/update_catalog.md
+    PUT /api/v1/connectors/{id}: https://docs.squared.ai/api-reference/connectors/update_connector.md
+    PUT /api/v1/syncs/{id}: https://docs.squared.ai/api-reference/syncs/update_sync.md
