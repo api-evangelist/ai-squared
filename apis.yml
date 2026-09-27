@@ -8,6 +8,22 @@ description: AI Squared is an enterprise data-and-AI integration platform that c
   AGPL-3.0. Its public REST API at api.squared.ai covers connectors, connector definitions, models, catalogs,
   syncs, sync runs and sync records, authenticated with a JWT bearer token. AI Squared is SOC 2 Type II
   certified and ships SaaS, cloud, on-premise and air-gapped federal deployments.
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - multiwoven/multiwoven
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 image: https://i0.wp.com/aisquared.ai/wp-content/uploads/2026/06/screenshot.png
 url: https://raw.githubusercontent.com/api-evangelist/ai-squared/refs/heads/main/apis.yml
 x-type: company
@@ -24,13 +40,14 @@ tags:
 - Data Integration
 - Reverse ETL
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - Customer Data Platform
 - Data Activation
-- Workflow-Automation
-- Open-Source
+- Workflow Automation
+- Open Source
 - MCP
 - Enterprise
+- A2A
 tags_raw:
 - data-integration
 - reverse-etl
@@ -42,6 +59,10 @@ tags_raw:
 - open-source
 - mcp
 - enterprise
+- Machine-Learning
+- Workflow-Automation
+- Open-Source
+- A2A
 apis:
 - aid: ai-squared:ai-squared-catalogs-api
   name: AI Squared Catalogs API
@@ -330,3 +351,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 28
   pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.squared.ai/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
