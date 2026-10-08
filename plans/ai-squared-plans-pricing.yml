@@ -65,3 +65,27 @@ free_tier:
 note: >-
   Recorded as quote-only rather than omitted: the absence of a public price is itself the
   measurement. An agent or a buyer cannot size an AI Squared deployment without talking to sales.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Federal
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Sparx
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
