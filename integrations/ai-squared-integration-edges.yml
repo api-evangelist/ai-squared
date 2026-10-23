@@ -29,6 +29,36 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Hugging Face (hugging-face-hub)
+  partner: hugging-face
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: hugging-face-hub
+  evidence: https://huggingface.co/aisquared
+  mirror_of: hugging-face/integrations/hugging-face-integration-edges.yml
+  apps:
+  - aisquared/databricks-dolly-15k
+  - aisquared/dais-question-answers
+  - aisquared/dais-2023
+  - aisquared/bolt-instruct-v2
+  - aisquared/bolt-instruct-v2-gguf
+  - aisquared/dlite-v2-774m
+  - aisquared/dlite-v2-124m
+  - aisquared/dlite-v1-355m
+  - aisquared/dlite-v1-774m
+  - aisquared/dlite-v2-1_5b
+  - aisquared/dlite-v1-124m
+  - aisquared
+  listing_count: 3
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Hugging Face Hub datasets
+  badges:
+  - Verified publisher (Hugging Face verified organisation)
 generated: '2026-10-18'
 method: searched
 source:
@@ -47,3 +77,4 @@ checked:
 - https://registry.npmjs.org
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
+- hugging-face/integrations/hugging-face-integration-edges.yml
